@@ -2,8 +2,7 @@ const posts = [
   {
     id: 1,
     img: "../src/assets/sample.avif",
-    heading:
-      "Sed orci velit, tempor in volutpat at, molestie ac lectus. Fusce consectetur fermentum tellus tincidunt venenatis.",
+    heading:"Sed orci velit, tempor in volutpat at, molestie ac lectus. Fusce consectetur fermentum tellus tincidunt venenatis.",
     des: "Phasellus volutpat vehicula odio. Sed sodales elementum dolor in eleifend. Mauris quis eleifend magna, et feugiat ex. Quisque nec tristique tortor. Sed at risus eget nisi pulvinar malesuada sit amet sed eros.",
   },
   {

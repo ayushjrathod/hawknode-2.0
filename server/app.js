@@ -30,6 +30,16 @@ mongoose
     console.log(err);
   });
 
+//Creating a schema for storing user profile info
+const userSchema = new mongoose.Schema({
+  username:String,
+  password:String
+});
+
+const User = mongoose.model("User",userSchema);
+
+
+
 
 
 // Serve the main HTML file when accessing the "/compose" route
