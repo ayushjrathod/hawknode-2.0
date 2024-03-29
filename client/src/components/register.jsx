@@ -1,5 +1,5 @@
-import React,{useRef} from "react";
-
+import React,{useEffect, useRef} from "react";
+import axios from "axios";
 
 
 
@@ -7,6 +7,8 @@ function Register(){
     const usernameRef = useRef();
     const passwordRef = useRef();
     const conpasswordRef = useRef();
+
+
 
     const handleSubmit=async (event)=>{
         event.preventDefault();     
@@ -17,17 +19,6 @@ function Register(){
         password:passwordRef.current.value,
         conpassword:conpasswordRef.current.value
     };
-
-    const response = await fetch("http://localhost:9000/register",{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify(data),
-    });
-
-    const result = await response.json();
-    console.log(result);
     };
 
 
