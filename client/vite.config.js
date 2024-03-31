@@ -3,18 +3,16 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from "tailwindcss";
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
   css: {
     postcss: {
       plugins: [tailwindcss()],
     },
   },
 
-  server:{
-    proxy:{
-      "/api" : "http://localhost:9000",
+  server: {
+    proxy: {
+      "/api": "http://localhost:9000",
     },
   },
 });
