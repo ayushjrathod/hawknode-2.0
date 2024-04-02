@@ -24,3 +24,5 @@ const dbConnect = async ()=>{
         console.log("Mongoose Connection failed",error);
     }
 }
+
+export default dbConnect;
