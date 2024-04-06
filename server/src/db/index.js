@@ -2,7 +2,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 
 
-// //Database connection
+// Database connection
 // mongoose
 //   .connect(
 //     process.env.DBURL
@@ -14,7 +14,7 @@ import mongoose from "mongoose";
 //     console.log(err);
 //   });
 
-  //Use try/catch when async and await is needed
+//Use try/catch when async and await is needed
 const dbConnect = async ()=>{
     try{
         await mongoose.connect(process.env.DBURL);

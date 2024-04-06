@@ -32,10 +32,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true,"password is required"],
     unique: false,  
+  },
+  refreshToken:{
+    type:String,
   }
 },{timestamps: true});   //timestamps is a mongoose feature automatically adds created at and updated at 
 
 
+
+//Encrypting password before saving if the value is modified
 userSchema.pre("save",async function(next){  // pre is hook which is used when we want to modify some data when data is just to be updated on the database
   if(!this.isModified("password")) return next(); 
 
@@ -43,16 +48,15 @@ userSchema.pre("save",async function(next){  // pre is hook which is used when w
   next();
 } )
 
+//A method to check wether the password provided is correct or not.
 userSchema.methods.isPasswordCorrect = async function(password){
   return await bcrypt.compare(password,this.password)
 }
 
+//A method to generate acccess token
 userSchema.methods.generateAccessToken = function(){
-  return jwt.sign({
+  return jwt.sign({                 //to send encrypted tokens we use JWT
     _id:this.id,
-    email:this.email,
-    username:this.username,
-    fullname:this.fullname
   },
   process.env.ACCESS_TOKEN_SECRET,
   {
@@ -60,6 +64,8 @@ userSchema.methods.generateAccessToken = function(){
   }
 )
 };
+
+//method to generate refresh token
 userSchema.methods.generateRefreshToken = function(){
   return jwt.sign(
     {
