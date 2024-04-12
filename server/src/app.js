@@ -9,12 +9,12 @@ const app = express();
 //setting up configs and middlewares
 app.use(cors({
     origin:process.env.CORS_ORIGIN,
-    credentials: true,
+    credentials: true
 }))
 
-app.use(express.json({limit:"64kd"}));
+app.use(express.json({limit:"50000  kb"}));
 app.use(express.urlencoded({extended:true})); //defines what encoder is used for url e.g what+is+express or what%20express
-app.use(express.static("public"));            //use public folder for static files 
+app.use(express.static("./public/temp"));            //use public folder for static files 
 app.use(cookieParser());
 
 
@@ -22,9 +22,10 @@ app.use(cookieParser());
 import userRouter from "./routes/user.routes.js"
 
 //Routes Decalaration
-app.use("/api/v1/users",userRouter);
+app.use("/v1/users",userRouter);
 
 
+//Database Connection
 dbConnect()
   .then(()=>{
     app.listen(process.env.PORT, () => {

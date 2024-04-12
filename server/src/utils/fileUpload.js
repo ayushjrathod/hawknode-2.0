@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
-
+//setting up cn config
 cloudinary.config({
   cloud_name: process.env.CN_CLOUD_NAME,
   api_key:  process.env.CN_API_KEY,
@@ -15,8 +15,10 @@ const uploadFileOnCloud = async (localFilePath) => {
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
+
     console.log("file uploaded successfully to CN", response.url);
     return response;
+    
   } catch (error) {
     fs.unlinkSync(localFilePath); //remove the locally saved tenporary file as the upload operation got failed
     return null;

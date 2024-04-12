@@ -1,5 +1,6 @@
 import {asyncHandler} from "../utils/asyncHandler.js";
 import {ApiError} from "../utils/ApiError.js";
+import {ApiResponse} from "../utils/ApiResponse.js"
 import User from "../models/user.models.js";
 import {uploadFileOnCloud} from "../utils/fileUpload.js";
 import jwt from "jsonwebtoken";
@@ -24,7 +25,7 @@ const generateAccessAndRefreshToken = async (userId)=>{
 };
 
 //𝗥𝗲𝗴𝗶𝘀𝘁𝗲𝗿𝗶𝗻𝗴 𝗡𝗲𝘄 𝗨𝘀𝗲𝗿 => Start
-const registerUesr = asyncHandler(async(req,res)=>{
+const registerUser = asyncHandler(async(req,res)=>{
     //get uesr details from frontend 
     //validation - not empty
     //check if user already exsists
@@ -36,6 +37,7 @@ const registerUesr = asyncHandler(async(req,res)=>{
     //Return Response.
 
     const {fullname,username,email,password} = req.body;
+    // console.log(req.body);
 
     //𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴 𝗶𝗳 𝗮𝗻𝘆 𝗼𝗳 𝘁𝗵𝗲 𝗳𝗶𝗲𝗹𝗱𝘀 𝗮𝗿𝗲 𝗲𝗺𝗽𝘁𝘆
     //some is method called on array goes through all elements are checks if any of them statiefies provided condition
@@ -52,7 +54,13 @@ const registerUesr = asyncHandler(async(req,res)=>{
         throw new ApiError(409,"User with email or username already exsists")
 
     //𝗔𝘃𝗮𝘁𝗮𝗿 𝗮𝗻𝗱 𝗰𝗼𝘃𝗲𝗿 𝗜𝗺𝗮𝗴𝗲𝘀
-    const avatarLocalPath = req.files?.avatar[0]?.path;
+    // const avatarLocalPath = req.files?.avatar[0]?.path;
+    // const avatarLocalPath = req.body.avatar;
+
+    const avatarLocalPath =
+      "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp/aantitled.jpeg";
+
+    console.log(avatarLocalPath);
 
     let coverImageLocalPath;
     if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0)
@@ -75,7 +83,7 @@ const registerUesr = asyncHandler(async(req,res)=>{
             coverImage: coverImage?.url || "",
             email,
             password,
-            username: username.toLowerCase();
+            username: username.toLowerCase()
         }
     );
 
@@ -129,8 +137,8 @@ const loginUser = asyncHandler(async(req,res)=>{
                 user: loggedInUser, accessToken, refreshToken
             },
             "User logged In Successfully"
-        )
-    ) 
+        ))
+ 
 
 });
 //Login User Logic =>END
