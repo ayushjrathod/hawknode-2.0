@@ -12,17 +12,18 @@ app.use(cors({
     credentials: true
 }))
 
-app.use(express.json({limit:"50000  kb"}));
+app.use(express.json({limit:"500000 kb"}));
 app.use(express.urlencoded({extended:true})); //defines what encoder is used for url e.g what+is+express or what%20express
 app.use(express.static("./public/temp"));            //use public folder for static files 
 app.use(cookieParser());
 
 
 //Routes Import
-import userRouter from "./routes/user.routes.js"
-
+import userRouter from "./routes/user.routes.js";
+import postRouter from "./routes/post.routes.js";
 //Routes Decalaration
 app.use("/v1/users",userRouter);
+app.use("/v1/posts",postRouter);
 
 
 //Database Connection

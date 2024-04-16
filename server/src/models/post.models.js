@@ -1,24 +1,23 @@
-import { MongoGridFSChunkError } from "mongodb";
 import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true,"A title is required"]
+    required: true,
   },
-  description: {
-    type:String
+  content: {
+    type:String,
+    required:true,
   },
-  tags:[String],
-  image: {
+  thumbnail: {
     type: String //we provide a url of where the image is uploaded
   },
-  CreatedBy:{
+  createdBy:{
     type: mongoose.Schema.Types.ObjectId,
     ref:'User'
   }
 },{timestamps: true});
 
-const Posts = mongoose.model("Post", blogSchema);
+const Post = mongoose.model("Post", blogSchema);
 
-export default Posts;
+export default Post;

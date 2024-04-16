@@ -1,32 +1,69 @@
 import { Editor } from "@tinymce/tinymce-react";
-import {Controller} from "react-hook-form"; 
+import axios from "../api/axios.jsx";
+import {useState,useRef,useCallback} from "react";
 
 function Compose() {
+  const editorRef = useRef(null);
+  const titleRef =useRef();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleEditorChange = useCallback((content, editor) => {
+    setContent(content);
+    setTitle(titleRef.current.value);
+  }, []);
+
+  const data={
+    title:title,
+    content:content,
+  }
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    console.log(data);
+    axios
+    .post("/v1/posts/create-post",data)
+    .then((response)=>{
+      console.log(response);
+    })
+    .catch((error)=>{
+      console.log(error);
+    });
+
+
+  };
+
   return (
     <>
       <h1 className="font-Akshar text-4xl font-medium px-10 py-3">Compose</h1>
+      <div className="flex justify-between m-2">
+      <input ref={titleRef} placeholder="Title" className="w-[80%] p-2 top-[116px] rounded-md font-Akshar text-2xl outline-none"/>
+
+      <button
+        onClick={handleClick}
+        className="bg-black text-white font-Akshar font-bold p-2 rounded-3xl px-8 mx-6 text-xl"
+      >
+        Post
+      </button>
+      </div>
 
       <Editor
-        apiKey="k864ik6xmkyzxucmb07802uje72hkojca3p3h0mju2rj5c2m"
+        apiKey="8w3gs7kyl0a3tx4ajvykqc6cv9u592zxc9el6ifsdvqsqezd"
+        initialValue=""
+        onEditorChange={handleEditorChange}
         init={{
+          inline_boundaries_selector:false,
+          inline_boundaries:false,  
+          height:500,
+          placeholder:"I am waiting for your thougts ...",
           plugins:
-            "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown",
-            
+            "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown",
           toolbar:
-            "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-          tinycomments_mode: "embedded",
-          tinycomments_author: "Author name",
-          mergetags_list: [
-            { value: "First.Name", title: "First Name" },
-            { value: "Email", title: "Email" },
-          ],
-          ai_request: (request, respondWith) =>
-            respondWith.string(() =>
-              Promise.reject("AI implementation comming..")
-            ),
+            "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | checklist numlist bullist indent outdent",
         }}
-        initialValue="Implement your thoughts here...."
       />
+
     </>
   );
 }

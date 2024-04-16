@@ -60,7 +60,7 @@ const registerUser = asyncHandler(async(req,res)=>{
     const avatarLocalPath =
       "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp/aantitled.jpeg";
 
-    console.log(avatarLocalPath);
+    //console.log(avatarLocalPath);
 
     let coverImageLocalPath;
     if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0)
@@ -171,14 +171,16 @@ const logoutUser = asyncHandler(async(userId)=>{
 
 // Start of refreshing access token after expiry
 const refreshAccessToken = asyncHandler(async(req,res)=>{
-    const incomigRrefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+    const incomigRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
 
-    if(!incomigRrefreshToken)
+    console.log(incomigRefreshToken);
+
+    if(!incomigRefreshToken)
         throw new ApiError(401,"Unauthorized Access");
 
         try {
             const decodedToken = jwt.verify(
-                incomigRrefreshToken,
+                incomigRefreshToken,
                 process.env.REFRESH_TOKEN_SECRET
             )
             const user = await User.findById(decodedToken?._id);
@@ -186,7 +188,7 @@ const refreshAccessToken = asyncHandler(async(req,res)=>{
             if(!user)
                 throw new ApiError(401,"invalid Refresh Token");
 
-        if(incomingRefreshToken !== user?.refreshToken) 
+        if(incomigRefreshToken !== user?.refreshToken) 
             throw new ApiError(401, "Refresh token is expired or used");
             
         
@@ -196,7 +198,7 @@ const refreshAccessToken = asyncHandler(async(req,res)=>{
             secure: true
         }
     
-        const {accessToken, newRefreshToken} = await generateAccessAndRefereshTokens(user._id);
+        const {accessToken, newRefreshToken} = await generateAccessAndRefreshToken(user._id);
     
         return res
         .status(200)

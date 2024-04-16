@@ -10,8 +10,10 @@ function Navbar(){
                 {/* <a className="mx-3" href="#postSection">Posts</a>
                 <a className="py-[10px]" >.</a>
                 <a className="mx-3" href="#footer">Contact</a>
-                <a className="py-[10px]" >.</a> */}
+                 */}
                 <a className="mx-3" href="/compose">Compose</a>
+                <a className="py-[10px]" >.</a>
+                <a className="mx-3 border-y-2" href="/compose">Log Out</a>
             </div>
             <div className="space-y-2 md:hidden">
                 <span className="w-8 h-0.5 bg-gray-600">Home</span>

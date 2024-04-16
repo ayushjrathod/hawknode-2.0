@@ -1,7 +1,7 @@
 
 function Hero(){
     return(
-        <div id="hero" className="w-full select-none">
+        <div id="hero" className="w-full h-screen select-none">
             <div className="w-full h-[75%] bg-[#FFC017]">
             
                 <h1 className="font-bold font-Asap text-black text-[70px] flex justify-center py-[10px] px-2">Stay Hungry, Stay Foolish</h1>
@@ -23,7 +23,7 @@ function Hero(){
                 </div>
             </div>
 
-            <div>
+            <div className="">
                 <div className="flex justify-center">
                  <h1 className="pt-10 flex font-Akshar text-3xl justify-center font-bold">Subscribe to my Newsletter</h1>
                  </div>

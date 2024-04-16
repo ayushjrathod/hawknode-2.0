@@ -1,12 +1,12 @@
 import { useEffect,useState,useRef } from "react"; 
-import {useNavigate,useLocation} from "react-router-dom";
+import {useNavigate,useLocation, Link} from "react-router-dom";
 import axios from "../api/axios.jsx";
 import {useAuth} from "../hooks/useAuth.jsx";
 
 
   
   function Login() {
-    const {setAuth} = useAuth();
+    const {setAuth,persist,setPersist} = useAuth();
 
     const navigate  = useNavigate();
 
@@ -31,7 +31,7 @@ import {useAuth} from "../hooks/useAuth.jsx";
 
     useEffect(()=>{
       setErrMsg("");
-    },[user,pass]);
+    },[user,pass]); //clears the errror message whenever user or pass is changed
 
     const handleSubmit = async(event)=>{
       event.preventDefault();
@@ -51,12 +51,8 @@ import {useAuth} from "../hooks/useAuth.jsx";
         .then((response)=>{
           console.log(response);
           const {accessToken,refreshToken} = response.data.data;
-
-          //store the tokens in local storage or cookies.
-          localStorage.setItem("accessToken",accessToken);
-          localStorage.setItem("refreshToken",refreshToken);
-
-          setAuth({user,pass,accessToken,refreshToken});
+          
+          setAuth({user,pass,refreshToken,accessToken});
           setUser("");
           setPass("");
 
@@ -75,11 +71,19 @@ import {useAuth} from "../hooks/useAuth.jsx";
         })
     }
 
+    const togglePersist = ()=> {
+      setPersist(prev => !prev);
+    }
+
+     useEffect(()=>{
+      localStorage.setItem("persist",persist);
+     },[persist]);
+
     return (
       <div className="w-dvw h-fit bg-yellow-400 inline-flex items-center justify-between">
         <div className="w-1/5 h-screen  bg-black overflow-hidden"></div>
         <div className="w-2/5 h-screen skew-x-12 bg-black overflow-hidden absolute"></div>
-        <div className="m-10 absolute">
+        <div className="m-10 absolute select-none">
           <h1 className="w-[433px] top-[414px] text-white text-[34.94px] font-semibold font-['Kanit'] leading-[44px] tracking-[2.80px]">
             Welcome to hawknode.
             <br />
@@ -98,15 +102,18 @@ import {useAuth} from "../hooks/useAuth.jsx";
             <div>
               <input
                 ref={userRef}
+                value={user}
                 id="username"
+                // autoComplete="off"
                 placeholder="username"
                 onChange={(e)=>setUser(e.target.value)}
-                className="w-80 p-2 top-[116px] bg-black rounded-md text-white font-Akshar text-2xl "
+                className="w-80 p-2 top-[116px] bg-black rounded-md text-white font-Akshar text-2xl"
               />
             </div>
             <div>
               <input
                 ref={passRef}
+                value={pass}
                 id="password"
                 placeholder="password"
                 onChange={(e)=>{setPass(e.target.value)}}
@@ -117,6 +124,22 @@ import {useAuth} from "../hooks/useAuth.jsx";
             <button className="w-80 p-2 justify-center top-[10px] text-white text-[25px] font-semibold font-['Akshar'] bg-slate-900 rounded-lg px-5 py-1">
               Sign in
             </button>
+            <div className="persistCheck p-2">
+              <input
+                  type="checkbox"
+                  id="persist"
+                  onChange={togglePersist}
+                  checked={persist}
+                  className="size-5 mt-2"
+                />
+                <label className="ml-3 text-lg" htmlFor="persist">Trust This Device</label>
+            </div>
+            <p className="pt-2 pl-2">
+              Need an Account? 
+              <span className="">
+                <Link className="m-2 text-blue-500 text-lg" to="/register">Register</Link>
+              </span>
+            </p>
           </form>
         </div>
       </div>

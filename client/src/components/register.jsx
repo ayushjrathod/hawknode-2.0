@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import api from "../api/axios";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "../api/axios";
 
 function Register() {
   const [file, setFile] = useState(null);
@@ -51,7 +52,7 @@ function Register() {
     // formData.append('conpassword', conpasswordRef.current.value);
 
 
-       api
+       axios
          .post("/v1/users/register",data) //this data is called payload 
          .then((response) => {
            console.log(JSON.stringify(response));
@@ -80,9 +81,13 @@ function Register() {
           className="bg-white rounded-md p-6 mx-24 "
           onSubmit={handleSubmit}
         >
-          <div className="w-80 h-auto p-2 bg-black rounded-md text-white font-Akshar text-2xl justify-center">
-            <label htmlFor="avatar">Click to Upload Avatar</label>
-            <br />
+          <div className="w-80 h-auto p-2 bg-black rounded-md text-white font-Akshar text-2xl flex justify-between">
+          <div className="items-center">
+            <label htmlFor="avatar">
+              Upload Avatar
+            </label>
+          </div>
+
             <input
               ref={avatarRef}
               id="avatar"
@@ -92,58 +97,61 @@ function Register() {
             />
             <img
               src={file}
-              className="rounded-full m-3 w-52 h-52 align-middle border-4"
+              htmlFor="avatar"
+              className=" flex justify-center rounded-full m-2 w-28 h-28  border-4"
             />
           </div>
-
           <div>
             <input
               ref={fullnameRef}
               id="fullname"
               placeholder="Full Name"
-              className="w-80  p-2 h- top-[116px] bg-black rounded-md text-white font-Akshar text-2xl my-5 "
+              className="w-80  p-2  bg-black rounded-md text-white font-Akshar text-2xl my-5 "
             />
           </div>
-
           <div>
             <input
               ref={usernameRef}
               id="username"
               placeholder="username"
-              className="w-80  p-2 h- top-[116px] bg-black rounded-md text-white font-Akshar text-2xl "
+              className="w-80  p-2  bg-black rounded-md text-white font-Akshar text-2xl "
             />
           </div>
-
           <div>
             <input
               ref={emailRef}
               id="Email"
               placeholder="Email"
-              className="w-80  p-2 h- top-[116px] bg-black rounded-md text-white font-Akshar text-2xl mt-5"
+              className="w-80  p-2  bg-black rounded-md text-white font-Akshar text-2xl mt-5"
             />
           </div>
-
           <div>
             <input
               ref={passwordRef}
               id="password"
               placeholder="password"
-              className="my-5 p-2 w-80  h- top-[116px] bg-black rounded-md text-white font-Akshar text-2xl "
+              className="my-5 p-2 w-80   bg-black rounded-md text-white font-Akshar text-2xl "
             />
           </div>
-
           <div>
             <input
               ref={conpasswordRef}
               id="conpassword"
               placeholder="confirm password"
-              className="mb-5 p-2 w-80  h- top-[116px] bg-black rounded-md text-white font-Akshar text-2xl "
+              className="mb-5 p-2 w-80   bg-black rounded-md text-white font-Akshar text-2xl "
             />
           </div>
-
-          <button className="w-80  justify-center top-[10px] text-white text-[25px] font-semibold font-['Akshar'] bg-slate-900 rounded-lg px-5 py-1">
+          <button className="w-80  justify-cen text-white text-[25px] font-semibold font-['Akshar'] bg-slate-900 rounded-lg px-5 py-1">
             Register
           </button>
+          <p className="pt-2 pl-2">
+            Have an Account?
+            <span className="">
+              <Link className="m-2 text-blue-500 text-lg" to="/login">
+                Log In
+              </Link>
+            </span>
+          </p>
         </form>
       </div>
     </div>

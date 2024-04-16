@@ -5,11 +5,11 @@ import  User  from "../models/user.models.js";
 
 //Verifying Json web tokens attached to incomming requests
 //Verifies if the associated user is authencated and if not throws and error
-
+//Basically this is isLOggedIN
 export const verifyJWT = asyncHandler(async(req, _, next) => {    // _ is used as a placeholder for unsed parameter
      
     try {
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")   //token = "Bearer fdgjnmklmagkfdg"
         
         // console.log(token);
         if (!token)
