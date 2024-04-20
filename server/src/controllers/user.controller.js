@@ -6,7 +6,6 @@ import {uploadFileOnCloud} from "../utils/fileUpload.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-
 //𝗚𝗲𝗻𝗲𝗿𝗮𝘁𝗶𝗻𝗴 𝗔𝗰𝗰𝗰𝗲𝘀𝘀 𝗮𝗻𝗱 𝗥𝗲𝗳𝗿𝗲𝘀𝗵 𝗧𝗼𝗸𝗲𝗻𝘀 
 const generateAccessAndRefreshToken = async (userId)=>{
     try {
@@ -101,6 +100,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 //User Login logic =>Start
 const loginUser = asyncHandler(async(req,res)=>{
     const {email,username,password} = req.body;
+   
     
     if(!username && !email)      // (!(username || email)) can be used
         throw new ApiError(400,"username or email is required");
@@ -171,7 +171,9 @@ const logoutUser = asyncHandler(async(userId)=>{
 
 // Start of refreshing access token after expiry
 const refreshAccessToken = asyncHandler(async(req,res)=>{
-    const incomigRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+    const incomigRefreshToken = req.cookies.refreshToken || req.json().refreshToken || req.params.refreshToken || req.query.refreshToken
+    console.log(req.json())
+   
 
     console.log(incomigRefreshToken);
 

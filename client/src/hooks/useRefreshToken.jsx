@@ -6,19 +6,26 @@ const useRefreshToken = () => {
   
   //const {auth} = useContext(AuthContext);
 
-  const refreshToken = auth?.refreshToken;
+  const refreshToken =auth?.refreshToken;
   
 
-  const refresh = async () => {
-    const response = await axios.post("/v1/users/refresh-token",refreshToken);
-    setAuth((prev) => {
-      console.log(JSON.stringify(prev));
-      console.log(response.data.data.accessToken);
-      return { ...prev, accessToken: response.data.data.accessToken };
+const refresh = () => {
+  axios
+    .post("/v1/users/refresh-token",{refreshToken})
+    .then((response) => {
+      setAuth((prev) => {
+        console.log(JSON.stringify(prev));
+        console.log(response.data.data.accessToken);
+        return { ...prev, accessToken: response.data.data.accessToken };
+      });
+      return response.data.data.accessToken;
+    })
+    .catch((error) => {
+      console.error(error);
     });
-    return response.data.accessToken;
-  };
-  return refresh;
+};
+
+return refresh;
 };
 
 export default useRefreshToken;

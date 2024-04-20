@@ -1,7 +1,6 @@
 import "./App.css";
 import Login from "./components/login";
 import Register from "./components/register";
-import Test from "./components/test"; // Assuming you intend to use it later
 import Compose from "./components/compose";
 import Layout from "./components/layout";
 import Home from "./components/home";

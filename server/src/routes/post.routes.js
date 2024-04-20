@@ -1,11 +1,12 @@
 import { Router } from "express";
-import {addPost} from "../controllers/post.controller.js";
+import {addPost, getPost} from "../controllers/post.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 
 const router = Router();
 
+//secured route
 router.route("/create-post").post(
     upload.fields([
         {
@@ -15,5 +16,7 @@ router.route("/create-post").post(
     ]),
     addPost
 );
+
+router.route("/get-posts").get(getPost);
 
 export default router;

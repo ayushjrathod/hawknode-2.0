@@ -1,12 +1,14 @@
 import { Editor } from "@tinymce/tinymce-react";
-import axios from "../api/axios.jsx";
+import axios, { axiosPrivate } from "../api/axios.jsx";
 import {useState,useRef,useCallback} from "react";
+
 
 function Compose() {
   const editorRef = useRef(null);
   const titleRef =useRef();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  
 
   const handleEditorChange = useCallback((content, editor) => {
     setContent(content);

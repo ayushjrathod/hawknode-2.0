@@ -3,7 +3,6 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Post from "../models/post.models.js";
 import { uploadFileOnCloud } from "../utils/fileUpload.js";
-import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
 //Creating new Post 
@@ -14,7 +13,7 @@ const addPost = asyncHandler(async(req,res)=>{
         throw new ApiError(400,"All fields are required");
 
     const thumbnailPath =
-      "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp/tempThumbnail.jpg";
+      "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp/sample.avif";
     
     if(!thumbnailPath)
         throw new ApiError(400,"Thumbnail is required");
@@ -40,4 +39,14 @@ const addPost = asyncHandler(async(req,res)=>{
 
 })
 
-export {addPost};
+const getPost = asyncHandler(async(req,res)=>{
+    const posts = await Post.find({})
+
+        return res
+          .status(200)
+          .json(new ApiResponse(200,posts,"Posts Fetched"));
+ 
+})
+
+export {addPost,
+    getPost,};

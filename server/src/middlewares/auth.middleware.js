@@ -9,9 +9,9 @@ import  User  from "../models/user.models.js";
 export const verifyJWT = asyncHandler(async(req, _, next) => {    // _ is used as a placeholder for unsed parameter
      
     try {
-        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")   //token = "Bearer fdgjnmklmagkfdg"
+        const token = req.body.accessToken || req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "") //token = "Bearer fdgjnmklmagkfdg"
         
-        // console.log(token);
+         console.log(token);
         if (!token)
             throw new ApiError(401, "Unauthorized request")
         

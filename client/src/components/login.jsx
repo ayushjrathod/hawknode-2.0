@@ -3,7 +3,6 @@ import {useNavigate,useLocation, Link} from "react-router-dom";
 import axios from "../api/axios.jsx";
 import {useAuth} from "../hooks/useAuth.jsx";
 
-
   
   function Login() {
     const {setAuth,persist,setPersist} = useAuth();
@@ -49,9 +48,8 @@ import {useAuth} from "../hooks/useAuth.jsx";
       axios
         .post("/v1/users/login",data)
         .then((response)=>{
-          console.log(response);
           const {accessToken,refreshToken} = response.data.data;
-          
+          console.log(refreshToken);
           setAuth({user,pass,refreshToken,accessToken});
           setUser("");
           setPass("");
