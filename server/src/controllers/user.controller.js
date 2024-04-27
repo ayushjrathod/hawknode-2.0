@@ -171,10 +171,8 @@ const logoutUser = asyncHandler(async(userId)=>{
 
 // Start of refreshing access token after expiry
 const refreshAccessToken = asyncHandler(async(req,res)=>{
-    const incomigRefreshToken = req.cookies.refreshToken || req.json().refreshToken || req.params.refreshToken || req.query.refreshToken
-    console.log(req.json())
-   
-
+    const incomigRefreshToken = req.cookies.refreshToken ||  req.params.refreshToken || req.query.refreshToken || req.body.refreshToken
+    
     console.log(incomigRefreshToken);
 
     if(!incomigRefreshToken)

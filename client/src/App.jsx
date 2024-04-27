@@ -7,7 +7,7 @@ import Home from "./components/home";
 import PreLoginPage from "./components/preLoginPage";
 import PersistLogin from "./components/persistLogin.jsx";
 import RequireAuth from "./components/requireAuth.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (

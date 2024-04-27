@@ -7,7 +7,9 @@ const useRefreshToken = () => {
   //const {auth} = useContext(AuthContext);
 
   const refreshToken =auth?.refreshToken;
-  
+  console.log(`the refresh token ${refreshToken}`);
+  console.log(auth.refreshToken)
+ console.log(`the access token ${auth.accessToken}`);  
 
 const refresh = () => {
   axios
