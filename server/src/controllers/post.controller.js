@@ -48,5 +48,18 @@ const getPost = asyncHandler(async(req,res)=>{
  
 })
 
-export {addPost,
-    getPost,};
+const getOnePost = asyncHandler(async(req,res)=>{
+    const {postID} = req.params;
+
+    const post = await Post.findById(postID);
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200,post,"post Fetched"));
+})
+
+export {
+    addPost,
+    getPost,
+    getOnePost,
+ };

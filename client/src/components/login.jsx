@@ -1,10 +1,13 @@
 import { useEffect,useState,useRef } from "react"; 
 import {useNavigate,useLocation, Link} from "react-router-dom";
+import Cookies from "universal-cookie";
 import axios from "../api/axios.jsx";
 import {useAuth} from "../hooks/useAuth.jsx";
 
   
   function Login() {
+    
+
     const {setAuth,persist,setPersist} = useAuth();
 
     const navigate  = useNavigate();
@@ -48,12 +51,18 @@ import {useAuth} from "../hooks/useAuth.jsx";
       axios
         .post("/v1/users/login",data)
         .then((response)=>{
-          const {accessToken,refreshToken} = response.data.data;
-          console.log(refreshToken);
+          const {user,accessToken,refreshToken} = response.data.data;
+
+
+         const cookies = new Cookies();         
+         cookies.set("accessToken", accessToken, { path: "/", sameSite: "none", secure: true });
+         cookies.set("refreshToken", refreshToken, { path: "/", sameSite: "none", secure: true });
+         cookies.set("user",user,{ path: "/", sameSite: "none", secure: true });
+         console.log(`this is login print ${cookies.get("user")}`)
           setAuth({user,pass,refreshToken,accessToken});
           setUser("");
           setPass("");
-
+         
           //redirect or perform some actions after successfull login here
           navigate(from,{replace:true});
         })
@@ -77,21 +86,23 @@ import {useAuth} from "../hooks/useAuth.jsx";
       localStorage.setItem("persist",persist);
      },[persist]);
 
+
+
     return (
-      <div className="w-dvw h-fit bg-yellow-400 inline-flex items-center justify-between">
-        <div className="w-1/5 h-screen  bg-black overflow-hidden"></div>
-        <div className="w-2/5 h-screen skew-x-12 bg-black overflow-hidden absolute"></div>
-        <div className="m-10 absolute select-none">
-          <h1 className="w-[433px] top-[414px] text-white text-[34.94px] font-semibold font-['Kanit'] leading-[44px] tracking-[2.80px]">
+      <div className="w-screen h-screen bg-yellow-400 lg:inline-flex lg:flex-row flex flex-col lg:items-center items-center justify-between">
+        <div className="hidden lg:block w-1/5 h-screen  bg-black overflow-hidden"></div>
+        <div className="hidden lg:block w-2/5 h-screen skew-x-12 bg-black overflow-hidden absolute"></div>
+        <div className="m-10 lg:absolute select-none">
+          <h1 className=" text-white text-3xl font-semibold font-['Kanit'] tracking-[2.80px] whitespace-nowrap">
             Welcome to hawknode.
             <br />
-            <div className="mt-2 w-[200px] h-[11px]  bg-neutral-50 rounded-[15px]" />
+            <div className="mt-2 h-2  bg-neutral-50 rounded-full" />
           </h1>
-          <h2 className="left-[80px]  text-white text-[26.94px] font-normal font-['Kanit'] leading-[44px] tracking-widest">
+          <h2 className=" text-white text-2xl font-normal font-['Kanit'] leading-[44px] tracking-widest">
             Sign in to continue
           </h2>
         </div>
-        <div className="w-auto h-auto mx-24">
+        <div className="pb-64 lg:pb-0 pt-2 w-auto h-auto mx-24">
           <form
             onSubmit={handleSubmit}
             className="bg-white rounded-md p-6 mx-24"

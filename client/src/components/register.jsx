@@ -63,17 +63,17 @@ function Register() {
   };
 
   return (
-    <div className="w-dvw h-fit bg-yellow-400 inline-flex items-center justify-between overflow-scroll">
-      <div className="w-1/5 h-screen  bg-black"></div>
-      <div className="w-2/5 h-screen skew-x-12 bg-black absolute"></div>
-      <div className="m-10 absolute">
-        <h1 className="w-[433px] top-[414px] text-white text-[34.94px] font-semibold font-['Kanit'] leading-[44px] tracking-[2.80px]">
+    <div className="w-screen h-screen bg-yellow-400 lg:inline-flex lg:flex-row flex flex-col lg:items-center items-center justify-between overflow-scroll">
+      <div className="hidden lg:block w-1/5 h-screen  bg-black"></div>
+      <div className="hidden lg:block w-2/5 h-screen skew-x-12 bg-black absolute"></div>
+      <div className="m-10 lg:absolute select-none">
+        <h1 className=" text-white text-3xl font-semibold font-['Kanit'] tracking-[2.80px] whitespace-nowrap">
           Welcome to hawknode.
           <br />
-          <div className="mt-2 w-[200px] h-[11px]  bg-neutral-50 rounded-[15px]" />
+          <div className="mt-2 h-2  bg-neutral-50 rounded-full" />
         </h1>
-        <h2 className="left-[80px]  text-white text-[26.94px] font-normal font-['Kanit'] leading-[44px] tracking-widest">
-          Click Register to Create an Account.
+        <h2 className=" text-white text-2xl font-normal font-['Kanit'] leading-[44px] tracking-widest">
+          Register to continue
         </h2>
       </div>
       <div className="w-auto h-auto mx-24">
@@ -82,11 +82,9 @@ function Register() {
           onSubmit={handleSubmit}
         >
           <div className="w-80 h-auto p-2 bg-black rounded-md text-white font-Akshar text-2xl flex justify-between">
-          <div className="items-center">
-            <label htmlFor="avatar">
-              Upload Avatar
-            </label>
-          </div>
+            <div className="items-center">
+              <label htmlFor="avatar">Upload Avatar</label>
+            </div>
 
             <input
               ref={avatarRef}

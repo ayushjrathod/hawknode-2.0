@@ -119,7 +119,8 @@ const loginUser = asyncHandler(async(req,res)=>{
 
     const {accessToken,refreshToken} = await generateAccessAndRefreshToken(user._id);
 
-    const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+    // const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
+    
 
     const options = {
         httpOnly: true,
@@ -134,7 +135,7 @@ const loginUser = asyncHandler(async(req,res)=>{
             new ApiResponse(
             200, 
             {
-                user: loggedInUser, accessToken, refreshToken
+                user, accessToken, refreshToken
             },
             "User logged In Successfully"
         ))
@@ -144,9 +145,10 @@ const loginUser = asyncHandler(async(req,res)=>{
 //Login User Logic =>END
 
 //Logout User =>Start
-const logoutUser = asyncHandler(async(userId)=>{
+const logoutUser = asyncHandler(async(req,res)=>{
+
     await User.findByIdAndUpdate(
-        req.user._id,
+        req.body._id,
         {
             $unset:{refreshToken: 1} //this removes the feild from the document
         },
@@ -173,8 +175,6 @@ const logoutUser = asyncHandler(async(userId)=>{
 const refreshAccessToken = asyncHandler(async(req,res)=>{
     const incomigRefreshToken = req.cookies.refreshToken ||  req.params.refreshToken || req.query.refreshToken || req.body.refreshToken
     
-    console.log(incomigRefreshToken);
-
     if(!incomigRefreshToken)
         throw new ApiError(401,"Unauthorized Access");
 
@@ -188,8 +188,11 @@ const refreshAccessToken = asyncHandler(async(req,res)=>{
             if(!user)
                 throw new ApiError(401,"invalid Refresh Token");
 
-        if(incomigRefreshToken !== user?.refreshToken) 
-            throw new ApiError(401, "Refresh token is expired or used");
+            console.log(`this is the incomign refresh token ${incomigRefreshToken}`)
+            console.log(`this is user.refreshToken ${user.refreshToken}`)
+
+            //   if(incomigRefreshToken !== user?.refreshToken) 
+            //     throw new ApiError(401, "Refresh token is expired or used");
             
         
     

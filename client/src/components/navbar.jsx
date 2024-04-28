@@ -1,28 +1,26 @@
+import Dropdown from "./dropdown.jsx";
 
-function Navbar(){
-    return(
-        <>
-            <div className="bg-black w-full h-12 flex px-[10px] justify-between select-none">
-                <a className="font-logo text-white py-[5px] text-2xl" href="/" >hawknode</a>
-            <div className="text-white text-xl font-Akshar font-bold py-[9px] hidden md:block">
-                <a className="mx-3" href="/home">Home</a>
-                <a className="py-[10px]" >.</a>
-                {/* <a className="mx-3" href="#postSection">Posts</a>
-                <a className="py-[10px]" >.</a>
-                <a className="mx-3" href="#footer">Contact</a>
-                 */}
-                <a className="mx-3" href="/compose">Compose</a>
-                <a className="py-[10px]" >.</a>
-                <a className="mx-3 border-y-2" href="/compose">Log Out</a>
-            </div>
-            <div className="space-y-2 md:hidden">
-                <span className="w-8 h-0.5 bg-gray-600">Home</span>
-                <span className="w-8 h-0.5 bg-gray-600">About</span>
-                <span className="w-8 h-0.5 bg-gray-600">Contact</span>
-            </div>
-            </div>
-        </>
-    );
+function Navbar() {
+  return (
+    <>
+      <div className="bg-black w-full h-fit flex px-[10px] justify-between select-none">
+        <a className="font-logo text-white py-[9px] text-2xl" href="/">
+          hawknode
+        </a>
+        <div className="text-white text-xl font-Akshar font-bold py-[9px]">
+          <a className="mx-3" href="/home">
+            Home
+          </a>
+          <a className="">.</a>
+          <a className="mx-3" href="/compose">
+            Compose
+          </a>
+          <a className="">.</a>
+          <Dropdown className="z-50"/>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Navbar;

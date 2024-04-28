@@ -8,6 +8,7 @@ import PreLoginPage from "./components/preLoginPage";
 import PersistLogin from "./components/persistLogin.jsx";
 import RequireAuth from "./components/requireAuth.jsx";
 import { Routes, Route } from "react-router-dom";
+import PostPage from "./components/postPage.jsx";
 
 export default function App() {
   return (
@@ -20,14 +21,15 @@ export default function App() {
       {/* Private Routes/Protected */}
       <Route element={<PersistLogin />}>
         <Route element={<RequireAuth />}>
-
           <Route path="/home" element={<Layout />}>
             <Route index element={<Home />} />
           </Route>
           <Route path="/compose" element={<Layout />}>
             <Route index element={<Compose />} />
           </Route>
-
+          <Route path="/post/:postID" element={<Layout />}>
+            <Route index element={<PostPage />} /> 
+          </Route>
         </Route>
       </Route>
     </Routes>
