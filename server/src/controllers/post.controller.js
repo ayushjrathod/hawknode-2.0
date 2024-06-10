@@ -3,7 +3,6 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Post from "../models/post.models.js";
 import { uploadFileOnCloud } from "../utils/fileUpload.js";
-import mongoose from "mongoose";
 
 //Creating new Post 
 const addPost = asyncHandler(async(req,res)=>{

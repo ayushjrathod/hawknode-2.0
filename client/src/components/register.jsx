@@ -5,13 +5,13 @@ import axios from "../api/axios";
 function Register() {
   const [file, setFile] = useState(null);
   
-
   const handleChange = async (e) => {
-    //setActualFilePath(e.target.value);  no way to get around fakpath
+    // setActualFilePath(e.target.value);  //no way to get around fakpath
+    // console.log(e.target.value);
     setFile(URL.createObjectURL(e.target.files[0]));
   };
-  //  console.log(file);
 
+  console.log(file)
   const fullnameRef = useRef();
   const usernameRef = useRef();
   const emailRef = useRef();
@@ -34,13 +34,13 @@ function Register() {
     }
       
 
-    const data = {
-      avatar: file,
-      fullname: fullnameRef.current.value,
-      username: usernameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
+    // const data = {
+    //   avatar: file,
+    //   fullname: fullnameRef.current.value,
+    //   username: usernameRef.current.value,
+    //   email: emailRef.current.value,
+    //   password: passwordRef.current.value,
+    // };
 
     //Another way instead of useRef
     // const formData = new FormData();
@@ -51,15 +51,26 @@ function Register() {
     // formData.append('password', passwordRef.current.value);
     // formData.append('conpassword', conpasswordRef.current.value);
 
+        const formData = new FormData();
+        formData.append("avatar", file); 
+        formData.append("fullname", fullnameRef.current.value);
+        formData.append("username", usernameRef.current.value);
+        formData.append("email", emailRef.current.value);
+        formData.append("password", passwordRef.current.value);    
 
-       axios
-         .post("/v1/users/register",data) //this data is called payload 
-         .then((response) => {
-           console.log(JSON.stringify(response));
-         })
-         .catch((error) => {
-           console.log(error);
-         });   
+      axios
+        .post("/v1/users/register", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(JSON.stringify(response));
+        })
+        .catch((error) => {
+          console.error(error); // Use console.error for error messages
+        });
+        
   };
 
   return (
@@ -89,7 +100,9 @@ function Register() {
             <input
               ref={avatarRef}
               id="avatar"
+              name="avatar"
               type="file"
+              accept="image/*"
               onChange={handleChange}
               className="hidden"
             />

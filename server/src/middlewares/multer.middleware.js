@@ -5,13 +5,17 @@ import multer from "multer";
 //on storing files to disk
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../server/public");
+    cb(null, "server/public/temp");
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + "-" + file.originalname);
   },
 });
 
+const maxSize = 10 * 1024 * 1024; // 10 MB
+
 export const upload = multer({
   storage,
+  limits:{fileSize:maxSize},
 });

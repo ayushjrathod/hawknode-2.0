@@ -13,21 +13,36 @@ import {
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
+
 const router = Router();
 
+// router.route("/register").post(
+//   upload.fields([
+//     {
+//       name: "avatar",
+//       maxCount: 1,
+//     },
+//     {
+//       name: "coverImage",
+//       maxCount: 1,
+//     },
+//   ]),
+//   registerUser
+// );
+
 router.route("/register").post(
-  upload.fields([
-    {
-      name: "avatar",
-      maxCount: 1,
-    },
-    {
-      name: "coverImage",
-      maxCount: 1,
-    },
-  ]),
+  upload.single("avatar"),
+  (req, res, next) => {
+    if (!req.file) {
+      console.log(req.file)
+      console.log("No file uploaded.");
+      return res.status(400).send("No file uploaded.");
+    }
+    next(); // Proceed to the next middleware (registerUser)
+  },
   registerUser
 );
+
 
 router.route("/login").post(loginUser);
 

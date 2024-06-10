@@ -3,6 +3,7 @@ import {ApiError} from "../utils/ApiError.js";
 import {ApiResponse} from "../utils/ApiResponse.js"
 import User from "../models/user.models.js";
 import {uploadFileOnCloud} from "../utils/fileUpload.js";
+import { upload } from "../middlewares/multer.middleware.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
@@ -43,7 +44,8 @@ const registerUser = asyncHandler(async(req,res)=>{
     //? is a opitional chaininh operator used it returns undefined or null instead of error if the thing is empty
     if([fullname,username,email,password].some((field)=>field?.trim() === ""))
         throw new ApiError(400,"All fields are required");
-
+    
+    
     //𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴 𝗶𝗳 𝘂𝘀𝗲𝗿 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗲𝘅𝘀𝗶𝘀𝘁𝘀
     const existingUser = await User.findOne({
         $or : [{username},{email}]   //performs or on the array
@@ -55,11 +57,15 @@ const registerUser = asyncHandler(async(req,res)=>{
     //𝗔𝘃𝗮𝘁𝗮𝗿 𝗮𝗻𝗱 𝗰𝗼𝘃𝗲𝗿 𝗜𝗺𝗮𝗴𝗲𝘀
     // const avatarLocalPath = req.files?.avatar[0]?.path;
     // const avatarLocalPath = req.body.avatar;
+    // console.log(req)
+    // console.log(req.files)
+    // const avatarLocalPath = req.files.avatar ? req.files.avatar[0].filename : null;     //const coverImageLocalPath = req.files?.coverImage[0]?.path;   
+    // console.log(avatarLocalPath);
 
-    const avatarLocalPath =
-      "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp/aantitled.jpeg";
+    console.log(req.file)
+    const avatarLocalPath = req.file? req.file.filename : null;     //const coverImageLocalPath = req.files?.coverImage[0]?.path;   
+    console.log(avatarLocalPath);
 
-    //console.log(avatarLocalPath);
 
     let coverImageLocalPath;
     if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0)
@@ -68,17 +74,17 @@ const registerUser = asyncHandler(async(req,res)=>{
     if(!avatarLocalPath)
         throw new ApiError(400,"Avatar file is required");
 
-    const avatar = await uploadFileOnCloud(avatarLocalPath);
+    const avatarImage = await uploadFileOnCloud(avatarLocalPath);
     const coverImage = await uploadFileOnCloud(coverImageLocalPath);
 
-    if(!avatar)
+    if(!avatarImage)
         throw new ApiError(400,"failed to upload avatar file");
 
     //Creating User
     const user = await User.create(
         {
             fullname,         //in es6 or js we can use fullname instead of username:username
-            avatar: avatar.url,
+            avatar: avatarImage?.url,
             coverImage: coverImage?.url || "",
             email,
             password,

@@ -28,27 +28,10 @@ export default function App() {
             <Route index element={<Compose />} />
           </Route>
           <Route path="/post/:postID" element={<Layout />}>
-            <Route index element={<PostPage />} /> 
+            <Route index element={<PostPage />} />
           </Route>
         </Route>
       </Route>
     </Routes>
   );
 }
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Layout />,
-//     children: [
-//       { path: "/", element: <Home /> },
-//       { path: "/compose", element: <Compose /> },
-//     ]
-//   },
-//   {path:"/login",element:<Login />},
-//   {path:"/register",element:<Register />},
-//   {path:"/",element:<PreLoginPage />}
-
-// ]);
-
-// export default router;
