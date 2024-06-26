@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import Post from "../models/post.models.js";
+import User from "../models/user.models.js";
 import { uploadFileOnCloud } from "../utils/fileUpload.js";
 
 //Creating new Post 
@@ -57,8 +58,51 @@ const getOnePost = asyncHandler(async(req,res)=>{
         .json(new ApiResponse(200,post,"post Fetched"));
 })
 
+const savePost = asyncHandler(async(req,res)=>{
+    const {postID} = req.params;
+    const {userId,isSaved} = req.body;
+    
+    
+    const postIdString = postID.toString();
+
+    if(!postID || !userId || isSaved === undefined)
+        throw new ApiError(400,"User and post save data is required");
+
+
+    const user = await User.findById(userId);
+    isSaved ? user.savedPosts.pull(postIdString) : user.savedPosts.push(postIdString);
+    await user.save();
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200,"Post saved"));
+})
+
+const getSavedPosts = asyncHandler(async(req,res)=>{
+    const {userId} = req.params;
+
+    if(!userId)
+        throw new ApiError(400,"User id is required");
+
+    const user = await User.findById(userId);
+    const savedPostsId = user.savedPosts;
+
+    const savedPosts = [];
+    for(let i = 0; i < savedPostsId.length; i++){
+       let post = await Post.findById(savedPostsId[i]);
+         savedPosts.push(post);
+     }
+    console.log(savedPosts);
+    
+    return res
+        .status(200)
+        .json(new ApiResponse(200,savedPosts,"Saved Posts"));
+})
+
 export {
     addPost,
     getPost,
     getOnePost,
+    savePost,
+    getSavedPosts,
  };

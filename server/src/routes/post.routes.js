@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {addPost, getPost, getOnePost} from "../controllers/post.controller.js";
+import {addPost, getPost, getOnePost,savePost,getSavedPosts } from "../controllers/post.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -19,5 +19,7 @@ router.route("/create-post").post(
 
 router.route("/get-posts").get(getPost);
 router.route("/:postID").get(getOnePost);
+router.route("/save-post/:postID").post(savePost);
+router.route("/get-saved-posts/:userId").get(getSavedPosts);
 
 export default router;
