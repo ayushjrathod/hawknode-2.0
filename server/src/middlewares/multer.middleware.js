@@ -5,7 +5,10 @@ import multer from "multer";
 //on storing files to disk
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "server/public/temp");
+    cb(
+      null,
+      "/home/ayra/Documents/Documents/Web Development/Projects/hawknode-2.0/server/public/temp"
+    );
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);

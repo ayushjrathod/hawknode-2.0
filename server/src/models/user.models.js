@@ -35,7 +35,12 @@ const userSchema = new mongoose.Schema({
   },
   refreshToken:{
     type:String,
+  },
+  savedPosts: {
+    type: [String],
+    default: [], 
   }
+
 },{timestamps: true});   //timestamps is a mongoose feature automatically adds created at and updated at 
 
 
