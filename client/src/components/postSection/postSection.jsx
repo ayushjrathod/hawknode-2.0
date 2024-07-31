@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios.jsx";
 import SavePost from "./savePost.jsx";
+import useAuth from "../../hooks/useAuth.jsx";
 
 function PostCard() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const {auth} = useAuth();
+  const user = auth.user;
+  const [currentUser,setCurrentUser] = useState(""); 
 
   useEffect(() => {
     axios
@@ -18,14 +22,28 @@ function PostCard() {
       });
   }, []);
 
+  //user is fetched at login only so we fetch it here again to get updated data.
+  useEffect(() => {
+    axios
+      .post("/v1/users/current-user",user)
+      .then((response) => {
+        setCurrentUser(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
   const handleClick = (postID) => {
     navigate(`/post/${postID}`);
   };
 
-
   return (
     <>
-        {posts.map((postData) => (
+        {posts.map((postData) => {
+            const isSaved = currentUser.savedPosts.some(savedPostId => savedPostId === postData._id) ? true : false;
+          return(
           <div className="m-2 w-screen md:w-auto md:m-4" key={postData._id}>
             <div className="flex mx-4 justify-between">
               <div className="flex">
@@ -46,7 +64,7 @@ function PostCard() {
                 </div>
               </div>
               <div className="mx-2">
-                <SavePost postData={postData} />
+                <SavePost mappedPostIsSaved={isSaved} postData={postData} />
               </div>
             </div>
             <div
@@ -54,11 +72,11 @@ function PostCard() {
               className="flex items-center cursor-pointer select-none"
             >
               <div className="mx-4 basis-3/4">
-                <h2 className="font-Andada Pro text-base md:text-2xl">
+                <h2 className="font-Andada Pro text-base md:text-2xl font-semibold">
                   {postData.title}
                 </h2>
                 <p
-                  className="hidden md:block font-Andada Pro text-xm"
+                  className="hidden md:block font-Andada Pro text-xm font-medium"
                   dangerouslySetInnerHTML={{
                     __html: postData.content.substring(0, 200) + "...",
                   }}
@@ -67,7 +85,7 @@ function PostCard() {
               <div className="m-4 w-[25%] h-[25%] basis-1/4 grid-cols-3">
                 <img
                   className="rounded-lg"
-                  src="../src/assets/sample.avif"
+                  src={postData.thumbnail}
                   alt="img of post"
                 />
               </div>
@@ -76,9 +94,11 @@ function PostCard() {
               <hr />
             </div>
           </div>
-        ))}
+          );
+        })}
       </>
   );
+
 }
 
 export default PostCard;

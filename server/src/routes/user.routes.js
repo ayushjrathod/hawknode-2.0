@@ -17,8 +17,8 @@ router.route("/register").post(
   upload.single("avatar"),
   (req, res, next) => {
     if (!req.file) {
-      console.log("No file uploaded.");
-      return res.status(400).send("No file uploaded.");
+      console.log("No avatar uploaded.");
+      return res.status(400).send("No avatar uploaded.");
     }
     next(); // Proceed to the next middleware (registerUser)
   },
@@ -32,7 +32,8 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(logoutUser);
 router.route("/refresh-token").get(refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
-router.route("/current-user").get(verifyJWT, getCurrentUser);
+// router.route("/current-user").get(verifyJWT, getCurrentUser);
+router.route("/current-user").post(getCurrentUser);
 
 // router
 //   .route("/update-account-details")

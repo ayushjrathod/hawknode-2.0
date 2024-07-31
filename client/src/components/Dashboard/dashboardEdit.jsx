@@ -61,7 +61,7 @@ function Register() {
       })
       .then((response) => {
         console.log(JSON.stringify(response));
-        navigate("/home", { replace: true });
+        navigate("/user/admin", { replace: true });
       })
       .catch((error) => {
         console.error(error);

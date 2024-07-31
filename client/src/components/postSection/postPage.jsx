@@ -23,7 +23,7 @@ function PostPage() {
       <div className="flex items-center justify-center">
         <img
           className="rounded-lg w-[80%] h-[80%]"
-          src="../src/assets/sample.avif"
+          src={post.thumbnail}
           alt="img of post" 
         />
       </div>

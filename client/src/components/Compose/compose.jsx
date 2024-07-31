@@ -33,7 +33,6 @@ const Compose = () => {
           onChange={setDescription}
           placeholder="Waiting for your thoughts ..."
           className="py-6"
-          
 
         />
         <div

@@ -12,3 +12,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.ql-editor {
+  font-family: serif;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: #333;
+}

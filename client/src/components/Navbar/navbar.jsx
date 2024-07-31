@@ -9,14 +9,9 @@ function Navbar() {
           hawknode
         </a>
         <div className="text-white text-xl font-Akshar font-bold py-1 flex">
-          <a className="mx-3 py-2" href="/home">
-            Home
-          </a>
-          <a className="py-1">.</a>
           <a className="mx-3 flex" href="/compose">
             <p className="py-2">Compose</p>
           </a>
-          
           <Dropdown className="z-50" />
         </div>
       </div>

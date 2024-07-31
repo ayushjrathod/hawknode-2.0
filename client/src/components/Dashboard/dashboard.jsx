@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import "boxicons/css/boxicons.min.css";
+import  MyPosts  from "./myPosts";
 
 const Dashboard = () => {
   const { auth } = useAuth();
@@ -137,36 +138,12 @@ const Dashboard = () => {
           </ul>
 
           <div className="flex gap-4 mb-4">
-            {/* Order Summary */}
+            {/* Saved Posts */}
             <div className="flex-1 bg-white   p-4 rounded-lg shadow">
               <h2 className="text-xl font-bold  text-black mb-4">
-                Order Summary
+                My Posts
               </h2>
-              <canvas id="orderChart"></canvas>
-            </div>
-            {/* Top Selling Products */}
-            <div className="w-80 bg-white   p-4 rounded-lg shadow">
-              <h2 className="text-xl font-bold  text-black mb-4">
-                Top Selling Products
-              </h2>
-              <ul className="space-y-4">
-                <li className="flex items-center justify-between">
-                  <span className=" text-black">Product 1</span>
-                  <span className=" text-black">$99.99</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className=" text-black">Product 2</span>
-                  <span className=" text-black">$79.99</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className=" text-black">Product 3</span>
-                  <span className=" text-black">$59.99</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className=" text-black">Product 4</span>
-                  <span className=" text-black">$49.99</span>
-                </li>
-              </ul>
+              <MyPosts />
             </div>
           </div>
         </main>

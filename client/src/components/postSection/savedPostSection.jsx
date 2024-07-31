@@ -45,7 +45,7 @@ const SavedPostSection = () => {
             className="flex items-center cursor-pointer select-none"
           >
             <div>
-              <h2 className="font-Andada Pro text-base md:text-sm">
+              <h2 className="font-Andada Pro text-base font-medium">
                 {postData.title}
               </h2>
             </div>

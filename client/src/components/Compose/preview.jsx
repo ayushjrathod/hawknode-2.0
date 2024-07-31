@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -9,19 +9,14 @@ import axios from "../../api/axios";
 const Preview = ({ setPublish, description, title }) => {
   const imageRef = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
-  const [tags, setTags] = useState([]); 
+  const [thumbnail, setThumbnail] = useState(null);
+  const [tags, setTags] = useState([]);
 
   const { auth } = useAuth();
   const currentUser = auth.user;
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  // const [preview, setPreview] = useState({
-  //   title: "",
-  //   photo: "",
-  // });
 
   const handleClick = () => {
     imageRef.current.click();
@@ -78,7 +73,7 @@ const Preview = ({ setPublish, description, title }) => {
             <input
               onChange={(e) => {
                 setImageUrl(URL.createObjectURL(e.target.files[0]));
-                setThumbnail({ ...thumbnail, photo: e.target.files[0] });
+                setThumbnail( e.target.files[0] );
               }}
               ref={imageRef}
               type="file"
@@ -95,9 +90,8 @@ const Preview = ({ setPublish, description, title }) => {
               <span className="font-bold"> hawknode </span>
               by user <span className="font-bold">{currentUser.username}</span>
             </h3>
-            <p className="text-gray-600">Add tags realted to your story.</p>
+            <p>Add tags realted to your story.</p>
             <TagsInput value={tags} onChange={(newTags) => setTags(newTags)} />
-            <p className=" text-gray-400">Press Enter to add new tag</p>
             <button
               onClick={handleSubmit}
               className="px-4 py-2 font-Akshar font-semibold bg-green-800 w-fit text-white rounded-full"
