@@ -10,7 +10,7 @@ function Login() {
   const navigate = useNavigate();
   //managing history so when users clicks back he goes where he came from
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/home";
+  const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const passRef = useRef();

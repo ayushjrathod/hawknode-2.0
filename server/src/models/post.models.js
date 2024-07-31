@@ -12,6 +12,10 @@ const blogSchema = new mongoose.Schema({
   thumbnail: {
     type: String //we provide a url of where the image is uploaded
   },
+  tags: {
+    type: [String],
+    required: true,
+  },
   createdBy:{
     type: mongoose.Schema.Types.ObjectId,
     ref:'User'

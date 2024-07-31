@@ -16,10 +16,12 @@ function CombinePostSection() {
             id="savedPostSection"
             className="mt-10 ml-8 font-Akshar text-lg font-[300]"
           >
-            <h4 className="m-2 font-Akshar text-xl">Saved Posts</h4>
+            <h4 className=" mt-12 font-Akshar text-2xl">Saved Posts</h4>
             <SavedPostSection />
           </div>
-          <Footer className="" />
+        </div>
+        <div className="sticky top-3/4 ml-10 mt-96">
+          <Footer />
         </div>
       </div>
     </div>

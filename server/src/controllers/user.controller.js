@@ -36,9 +36,6 @@ const registerUser = asyncHandler(async(req,res)=>{
     //Return Response.
 
     const {fullname,username,email,password} = req.body;
-    // console.log(req.body);
-
-    //𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴 𝗶𝗳 𝗮𝗻𝘆 𝗼𝗳 𝘁𝗵𝗲 𝗳𝗶𝗲𝗹𝗱𝘀 𝗮𝗿𝗲 𝗲𝗺𝗽𝘁𝘆
     //some is method called on array goes through all elements are checks if any of them statiefies provided condition
     //? is a opitional chaining operator used it returns undefined or null instead of error if the thing is empty
     if([fullname,username,email,password].some((field)=>field?.trim() === ""))
@@ -233,12 +230,16 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 // End of changeCurrentPassword
 
 // Start of getCurrentUser
+//getting user and sending it updatesd user details.
 const getCurrentUser = asyncHandler(async(req, res) => {
+    const user = req.body;
+    const currentUser = await User.findById(user._id);
+
     return res
     .status(200)
     .json(new ApiResponse(
         200,
-        req.user,
+        currentUser,
         "User fetched successfully"
     ))
 })

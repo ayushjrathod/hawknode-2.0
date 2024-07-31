@@ -31,7 +31,7 @@ function Logout() {
             sameSite: "none",
             secure: true,
           });
-          navigate("/");
+          navigate("/landing");
         }
       })
       .catch((error) => {
