@@ -1,5 +1,5 @@
 
-# hawkknode - A web app to write blogs.
+# hawknode - A web app to write blogs.
 
 A blog web app developed utilizing MERN stack and libraries such as axios, bcrypt, multer and many more.
 
