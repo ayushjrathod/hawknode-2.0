@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import "boxicons/css/boxicons.min.css";
 import  MyPosts  from "./myPosts";
+import SavedPosts from "./savedPosts";
 
 const Dashboard = () => {
   const { auth } = useAuth();
@@ -32,28 +33,32 @@ const Dashboard = () => {
     <div className="flex">
       {/* Sidebar */}
       <div
-        className={`fixed top-15 left-0 bg-white   h-full ${
+        className={`fixed top-15 left-0 bg-black h-full ${
           isSidebarOpen ? "w-60" : "w-16"
         } transition-width duration-300`}
       >
         <i
-          className="bx bx-menu text-4xl cursor-pointer px-2"
+          className="bx bx-menu text-4xl cursor-pointer px-2 my-4 text-white"
           onClick={handleSidebarToggle}
         ></i>
         <ul className="mt-8">
-          <li className="flex items-center p-4  text-black">
+        <li className="flex items-center p-4 text-white">  
+          <i className="bx bxs-home"></i>
+          {isSidebarOpen && <Link to="/" className="pl-2">Home</Link>}
+        </li>
+          <li className="flex items-center p-4 text-white">
             <i className="bx bxs-dashboard"></i>
-            {isSidebarOpen && <span className="ml-2">Dashboard</span>}
+            {isSidebarOpen && <Link to="" className="ml-4">Dashboard</Link>}
           </li>
-          <li className="flex items-center p-4  text-black">
+          <li className="flex items-center p-4 text-white">
             <i className="bx bx-cog"></i>
-            {isSidebarOpen && <span className="ml-2">Settings</span>}
+            {isSidebarOpen && <Link to="" className="ml-2">Settings</Link>}
           </li>
         </ul>
         <ul className="mt-auto">
-          <li className="flex items-center p-4 text-red-600">
+          <li className="flex items-center p-4 text-red-400">
             <i className="bx bx-log-out-circle"></i>
-            {isSidebarOpen && <span className="ml-2">Logout</span>}
+            {isSidebarOpen && <Link to="" className="ml-2"  >Logout</Link>}
           </li>
         </ul>
       </div>
@@ -90,60 +95,56 @@ const Dashboard = () => {
                   className="font-Akshar font-semibold mx-1 flex items-center px-4 py-2 bg-black text-white rounded-full"
                 >
                   <i className="bx bx-edit-alt"></i>
-                  Edit
+                  Edit User Details
                 </Link>
               </div>
               <div className="mt-1">
-                <Link
-                  to={`/user/change-password/${auth.user.username}`}
-                  className="font-Akshar font-semibold mx-1 flex items-center px-4 py-2 bg-black text-white rounded-full"
-                >
-                  <i className="bx bx-edit-alt"></i>
-                  Change Password
-                </Link>
               </div>
             </div>
           </div>
 
           {/* Insights */}
-          <ul className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-4">
+          <ul className="hidden grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-4">
             <li className="flex items-center p-4 bg-white   rounded-lg shadow">
               <i className="bx bx-calendar-check text-4xl bg-blue-100 dark:bg-blue-600 text-blue-600 p-2 rounded-lg"></i>
               <div className="ml-4">
                 <h3 className="text-xl font-semibold  text-black">1,074</h3>
-                <p className="text-gray-500 dark:text-gray-400">Paid Order</p>
+                <p className="text-gray-500 dark:text-gray-400">BoxOne</p>
               </div>
             </li>
             <li className="flex items-center p-4 bg-white   rounded-lg shadow">
               <i className="bx bx-show-alt text-4xl bg-yellow-100 dark:bg-yellow-600 text-yellow-600 p-2 rounded-lg"></i>
               <div className="ml-4">
                 <h3 className="text-xl font-semibold  text-black">3,944</h3>
-                <p className="text-gray-500 dark:text-gray-400">Site Visit</p>
+                <p className="text-gray-500 dark:text-gray-400">BoxTwo</p>
               </div>
             </li>
             <li className="flex items-center p-4 bg-white   rounded-lg shadow">
               <i className="bx bx-line-chart text-4xl bg-green-100 dark:bg-green-600 text-green-600 p-2 rounded-lg"></i>
               <div className="ml-4">
                 <h3 className="text-xl font-semibold  text-black">14,721</h3>
-                <p className="text-gray-500 dark:text-gray-400">Searches</p>
+                <p className="text-gray-500 dark:text-gray-400">BoxThree</p>
               </div>
             </li>
             <li className="flex items-center p-4 bg-white   rounded-lg shadow">
               <i className="bx bx-dollar-circle text-4xl bg-red-100 dark:bg-red-600 text-red-600 p-2 rounded-lg"></i>
               <div className="ml-4">
                 <h3 className="text-xl font-semibold  text-black">$6,742</h3>
-                <p className="text-gray-500 dark:text-gray-400">Total Sales</p>
+                <p className="text-gray-500 dark:text-gray-400">BoxFour</p>
               </div>
             </li>
           </ul>
 
           <div className="flex gap-4 mb-4">
-            {/* Saved Posts */}
             <div className="flex-1 bg-white   p-4 rounded-lg shadow">
-              <h2 className="text-xl font-bold  text-black mb-4">
-                My Posts
-              </h2>
+              <h2 className="text-xl font-bold  text-black mb-4">My Posts</h2>
               <MyPosts />
+            </div>
+          </div>
+          <div className="flex gap-4 mb-4">
+            <div className="flex-1 bg-white   p-4 rounded-lg shadow">
+              <h2 className="text-xl font-bold  text-black mb-4">Saved Posts</h2>
+              <SavedPosts />
             </div>
           </div>
         </main>

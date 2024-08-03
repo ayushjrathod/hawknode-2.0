@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 
 const Dropdown = () => {
   const { auth } = useAuth();
+  console.log(auth.user.avatar)
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
 
@@ -66,7 +67,7 @@ const Dropdown = () => {
           }}
         >
           <img
-            src="../src/assets/avatar.avif"
+            src={auth.user.avatar}
             className="size-10 rounded-full border-2 p-0.5"
           />
         </button>
