@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
+import SavedPost from "../postSection/savePost";
 
-const SavedPostSection = () => {
+const SavedPosts = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
   const userId = auth.user._id;
@@ -14,18 +15,20 @@ const SavedPostSection = () => {
     ? savedPosts
     : savedPosts.slice(0, 3);
 
-
-
-  useEffect(() => {
-    axios
-      .get(`/v1/posts/get-saved-posts/${userId}`)
-      .then((response) => {
-        setSavedPosts(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [],[savedPosts]);
+  useEffect(
+    () => {
+      axios
+        .get(`/v1/posts/get-saved-posts/${userId}`)
+        .then((response) => {
+          setSavedPosts(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    [],
+    [savedPosts]
+  );
 
   const handleClick = (postID) => {
     navigate(`/post/${postID}`);
@@ -34,7 +37,7 @@ const SavedPostSection = () => {
   return (
     <>
       {displayedSavedPosts.map((postData) => (
-        <div className="md:w-96 m-2 md:ml-8" key={postData._id}>
+        <div className="m-2 md:w-96 md:m-4" key={postData._id}>
           <div className="flex">
             <p className="text-slate-500 text-sm md:text-base px-0.5">
               Blogger Hawk
@@ -54,7 +57,7 @@ const SavedPostSection = () => {
       ))}
       {savedPosts.length > 3 && (
         <button
-          className="px-2 ml-6 text-base text-blue-500"
+          className="px-2 mx-2 text-lg text-blue-500"
           onClick={() => setShowAllSavedPosts(!showAllSavedPosts)}
         >
           {showAllSavedPosts ? "Show Less" : "See More"}
@@ -64,4 +67,4 @@ const SavedPostSection = () => {
   );
 };
 
-export default SavedPostSection;
+export default SavedPosts;

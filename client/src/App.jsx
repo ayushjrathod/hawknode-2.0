@@ -2,9 +2,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Auth/login";
 import Register from "./components/Auth/register";
-import PreLoginPage from "./components/Auth/preLoginPage";
+import LandingPage from "./components/LandingPage/landingPage.jsx";
 import RequireAuth from "./components/Auth/requireAuth.jsx";
-import Home from "./components/Hero/home";
 import Layout from "./components/layout";
 import Compose from "./components/Compose/compose";
 import PostPage from "./components/postSection/postPage.jsx";
@@ -13,12 +12,13 @@ import DashboardEdit from "./components/Dashboard/dashboardEdit.jsx";
 import ChangePassword from "./components/Dashboard/changePassword.jsx";
 import EditPost from "./components/Compose/editPost.jsx";
 import DeletePost from "./components/Compose/deletePost.jsx";
+import CombinePostSection from "./components/postSection/combinePostsSection.jsx";
 
 export default function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/landing" element={<PreLoginPage />} />
+      <Route path="/landing" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
@@ -26,9 +26,9 @@ export default function App() {
       {/* <Route element={<PersistLogin />}> */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<CombinePostSection />} />
           </Route>
-          <Route path="/compose" element={<Layout />}>
+          <Route path="/compose">
             <Route index element={<Compose />} />
           </Route>
           <Route path="/post/:postID" element={<Layout />}>
@@ -40,7 +40,7 @@ export default function App() {
           <Route path="/delete-post/:postID" element={<Layout />}>
             <Route index element={<DeletePost />} />
           </Route>
-          <Route path="/user/:username" element={<Layout />}>
+          <Route path="/user/:username">
             <Route index element={<Dashboard />} />
           </Route>
           <Route path="/user/edit/:username" element={<Layout />}>

@@ -78,7 +78,7 @@ function PostCard() {
                 <p
                   className="hidden md:block font-Andada Pro text-xm font-medium"
                   dangerouslySetInnerHTML={{
-                    __html: postData.content.substring(0, 200) + "...",
+                    __html: postData.content.substring(0, 125) + "...",
                   }}
                 ></p>
               </div>
@@ -91,7 +91,7 @@ function PostCard() {
               </div>
             </div>
             <div className="my-4">
-              <hr />
+              <hr className="my-8" />
             </div>
           </div>
           );
