@@ -18,14 +18,14 @@ const SavedPostSection = () => {
 
   useEffect(() => {
     axios
-      .get(`/v1/posts/get-saved-posts/${userId}`)
+      .get(`/v1/users/get-saved-posts/${userId}`)
       .then((response) => {
         setSavedPosts(response.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [],[savedPosts]);
+  },[savedPosts]);
 
   const handleClick = (postID) => {
     navigate(`/post/${postID}`);
@@ -37,7 +37,7 @@ const SavedPostSection = () => {
         <div className="md:w-96 m-2 md:ml-8" key={postData._id}>
           <div className="flex">
             <p className="text-slate-500 text-sm md:text-base px-0.5">
-              Blogger Hawk
+              {postData.createdBy.username} 
             </p>
           </div>
           <div

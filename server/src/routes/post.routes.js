@@ -27,4 +27,5 @@ router.route("/get-saved-posts/:userId").get(getSavedPosts);
 router.route("/get-my-posts/:userId").get(getMyPosts);
 router.route("/edit-post/:postID").put(editPost);
 
+
 export default router;

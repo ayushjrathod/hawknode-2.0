@@ -38,16 +38,24 @@ const addPost = asyncHandler(async(req,res)=>{
     if(!createdPost)
         throw new ApiError(500,"Something went wrong while creaing a post on cloud");
 
+    return res
+        .status(201)
+        .json(new ApiResponse(201,"Post Created"));
+
 })
 
 //getting all posts
 const getPost = asyncHandler(async(req,res)=>{
-    const posts = await Post.find({})
 
-        return res
-          .status(200)
-          .json(new ApiResponse(200,posts,"Posts Fetched"));
- 
+    Post.find({}).populate("createdBy")
+        .then((posts)=>{
+            return res
+                .status(200)
+                .json(new ApiResponse(200,posts,"Posts Fetched"));
+        })
+        .catch((err)=>{
+            throw new ApiError(500,err,"Something went wrong while fetching posts");
+        });
 })
 
 //getting one post
@@ -85,17 +93,7 @@ const savePost = asyncHandler(async(req,res)=>{
 const getSavedPosts = asyncHandler(async(req,res)=>{
     const {userId} = req.params;
 
-    if(!userId)
-        throw new ApiError(400,"User id is required");
-
-    const user = await User.findById(userId);
-    const savedPostsId = user.savedPosts;
-
-    const savedPosts = [];
-    for(let i = 0; i < savedPostsId.length; i++){
-       let post = await Post.findById(savedPostsId[i]);
-         savedPosts.push(post);
-     }
+    User.findById(userId).populate()
     
     return res
         .status(200)
@@ -138,7 +136,6 @@ const editPost = asyncHandler(async(req,res)=>{
         .json(new ApiResponse(200,post,"Post updated"));
 
 });
-
 
 
 export {

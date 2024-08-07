@@ -3,7 +3,6 @@ import PostSection from "./postSection.jsx";
 import Footer from "../Footer/footer.jsx";
 
 function CombinePostSection() {
-
   return (
     <div className="flex">
       <div id="postSection" className="w-[60%] pl-10 flex-col justify-center">
@@ -19,6 +18,10 @@ function CombinePostSection() {
             <h4 className="font-Akshar text-lg ml-8">Saved Posts</h4>
             <SavedPostSection />
           </div>
+          {/* <div className="mt-1 font-Akshar text-lg font-[300]">
+            <h5 className="font-Akshar text-lg ml-8">Search By Tags</h4>
+            <TagsSection />
+          </div> */}
         </div>
         <div className="sticky top-3/4 ml-10 mt-96">
           <Footer />
@@ -28,4 +31,4 @@ function CombinePostSection() {
   );
 }
 
-export default CombinePostSection
+export default CombinePostSection;

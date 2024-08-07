@@ -1,4 +1,4 @@
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -42,7 +42,7 @@ const Preview = ({ setPublish, description, title }) => {
       .then((response) => {
         console.log(response);
         setLoading(false);
-        navigate("/dashboard");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -73,16 +73,21 @@ const Preview = ({ setPublish, description, title }) => {
             <input
               onChange={(e) => {
                 setImageUrl(URL.createObjectURL(e.target.files[0]));
-                setThumbnail( e.target.files[0] );
+                setThumbnail(e.target.files[0]);
               }}
               ref={imageRef}
               type="file"
               hidden
             />
             <h1 className="text-xl outline-none w-full border-b border-gray-300 py-2">
-              Title: {title}
+              {title}
             </h1>
-            <p className="text-base text-gray-500 py-3">Description: {description}</p>
+            <p
+              className="text-base text-gray-500 py-3"
+              dangerouslySetInnerHTML={{
+                __html: description.substring(0, 125) + ".....",
+              }}
+            ></p>
           </div>
           <div className="flex-[1] flex flex-col gap-4 mb-5 md:mb-0">
             <h3 className="text-2xl">
@@ -91,10 +96,11 @@ const Preview = ({ setPublish, description, title }) => {
               by user <span className="font-bold">{currentUser.username}</span>
             </h3>
             <p>Add tags realted to your story.</p>
+            <p className=" text-gray-500 text-sm">Press Enter to add new tag</p>
             <TagsInput value={tags} onChange={(newTags) => setTags(newTags)} />
             <button
               onClick={handleSubmit}
-              className="px-4 py-2 font-Akshar font-semibold bg-green-800 w-fit text-white rounded-full"
+              className="px-4 py-2 font-Akshar font-semibold bg-black w-fit text-white rounded-full"
             >
               {loading ? "Submitting..." : "Publish Now"}
             </button>

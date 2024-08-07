@@ -36,10 +36,11 @@ const userSchema = new mongoose.Schema({
   refreshToken:{
     type:String,
   },
-  savedPosts: {
-    type: [String],
-    default: [], 
-  }
+  savedPosts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Post",
+    required: false,
+  }]
 
 },{timestamps: true});   //timestamps is a mongoose feature automatically adds created at and updated at 
 

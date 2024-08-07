@@ -5,8 +5,9 @@ import {
   registerUser,
   refreshAccessToken,
   changeCurrentPassword,
-  getCurrentUser,
+  getUser,
   updateAccountDetails,
+  getSavedPosts,
 } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -33,7 +34,8 @@ router.route("/logout").post(logoutUser);
 router.route("/refresh-token").get(refreshAccessToken);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 // router.route("/current-user").get(verifyJWT, getCurrentUser);
-router.route("/current-user").post(getCurrentUser);
+router.route("/get-user").post(getUser);
+router.route("/get-saved-posts/:userId").get(getSavedPosts);
 
 // router
 //   .route("/update-account-details")

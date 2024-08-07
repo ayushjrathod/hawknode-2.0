@@ -25,7 +25,7 @@ function PostCard() {
   //user is fetched at login only so we fetch it here again to get updated data.
   useEffect(() => {
     axios
-      .post("/v1/users/current-user",user)
+      .post("/v1/users/get-user",user)
       .then((response) => {
         setCurrentUser(response.data.data);
       })
@@ -49,17 +49,17 @@ function PostCard() {
               <div className="flex">
                 <img
                   className="rounded-full size-6 md:size-8 my-2"
-                  src="../src/assets/avatar.avif"
+                  src={postData.createdBy.avatar}
                 />
                 <div className="flex mx-4 md:my-1 mt-2 py-2">
                   <p className="text-slate-500 text-xs md:text-base px-0.5">
-                    Blogger Hawk
+                    {postData.createdBy.username}
                   </p>
                   <span className="text-slate-500 mx-3 hidden font-bold md:block">
                     .
                   </span>
                   <p className="text-slate-500 text-xs md:text-base px-0.5">
-                    03.06.2030
+                    {postData.createdAt.substring(0, 10)} 
                   </p>
                 </div>
               </div>
