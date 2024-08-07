@@ -82,9 +82,9 @@ function PostCard() {
                   }}
                 ></p>
               </div>
-              <div className="m-4 w-[25%] h-[25%] basis-1/4 grid-cols-3">
+              <div className="m-4 basis-1/4 grid-cols-3">
                 <img
-                  className="rounded-lg"
+                  className="object-scale-down w-32 h-28"  
                   src={postData.thumbnail}
                   alt="img of post"
                 />

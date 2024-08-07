@@ -1,36 +1,19 @@
 import axios from "../../api/axios";
-import Cookies from "universal-cookie";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Logout() {
-  const cookies = new Cookies();
   const navigate = useNavigate();
+  console.log(Cookies.get());
 
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const user = cookies.get("user");
-
     axios
-      .post("/v1/users/logout", user)
+      .get("/v1/users/logout")
       .then((response) => {
         if (response.status == 200) {
-          //console.log(response);
-          cookies.set("accessToken", null, {
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
-          cookies.set("refreshToken", null, {
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
-          cookies.set("user", null, {
-            path: "/",
-            sameSite: "none",
-            secure: true,
-          });
+          Cookies.set("accessToken", "", { path: "/" });
           navigate("/landing");
         }
       })

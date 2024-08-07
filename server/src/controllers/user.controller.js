@@ -127,25 +127,11 @@ const loginUser = asyncHandler(async (req, res) => {
 
 //Logout User =>Start
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(
-    req.body._id,
-    {
-      $unset: { refreshToken: 1 }, //this removes the feild from the document
-    },
-    {
-      new: true,
-    }
-  );
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
+  await User.findOneAndUpdate(req.body.refreshToken, { refreshToken: "" });
 
   return res
     .status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "User logged Out"));
 });
 //LogoutUser =>END
