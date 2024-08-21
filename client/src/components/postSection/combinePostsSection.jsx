@@ -1,6 +1,9 @@
+import { useState } from "react";
 import SavedPostSection from "./savedPostSection.jsx";
 import PostSection from "./postSection.jsx";
 import Footer from "../Footer/footer.jsx";
+import Loader from "../loader.jsx";
+import TagsSection from "./tagsSection.jsx";
 
 function CombinePostSection() {
   return (
@@ -15,17 +18,17 @@ function CombinePostSection() {
             id="savedPostSection"
             className="mt-2 font-Akshar text-lg font-[300]"
           >
-            <h4 className="font-Akshar text-lg ml-8">Saved Posts</h4>
+            <p className="font-Akshar text-lg ml-8">Saved Posts</p>
             <SavedPostSection />
+            <div className="mt-6">
+              <p className="font-Akshar text-lg ml-8">Tags</p>
+              <TagsSection />
+            </div>
           </div>
-          {/* <div className="mt-1 font-Akshar text-lg font-[300]">
-            <h5 className="font-Akshar text-lg ml-8">Search By Tags</h4>
-            <TagsSection />
-          </div> */}
         </div>
-        <div className="sticky top-3/4 ml-10 mt-96">
+        {/* <div className="sticky top-3/4 ml-10 mt-96 flex justify-center">
           <Footer />
-        </div>
+        </div> */}
       </div>
     </div>
   );

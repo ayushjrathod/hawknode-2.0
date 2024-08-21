@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios.jsx";
 import SavePost from "./savePost.jsx";
 import useAuth from "../../hooks/useAuth.jsx";
+import Loader from "../loader.jsx";
 
 function PostCard() {
   const navigate = useNavigate();
@@ -10,15 +11,19 @@ function PostCard() {
   const {auth} = useAuth();
   const user = auth.user;
   const [currentUser,setCurrentUser] = useState(""); 
+  const [loading,setLoading] = useState(true);
+
 
   useEffect(() => {
     axios
       .get("/v1/posts/get-posts")
       .then((response) => {
         setPosts(response.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(true);
       });
   }, []);
 
@@ -38,6 +43,9 @@ function PostCard() {
   const handleClick = (postID) => {
     navigate(`/post/${postID}`);
   };
+
+  if(loading)
+      return <Loader />
 
   return (
     <>

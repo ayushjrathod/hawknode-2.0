@@ -20,12 +20,10 @@ function LandingPage() {
         </h1>
       </div>
       <div className="font-Asap text-white text-2xl font-bold flex justify-center">
-        <p>
-          Make your thoughts known to the world or Start your daily journal.
-        </p>
+        <p>Your Voice, Our Community,</p>
       </div>
       <div className="mb-6 font-Asap text-white text-2xl font-bold flex justify-center flex justify-center">
-        <p>All the blogging tools at one place.</p>
+        <p> Where Your Thoughts are Heard, Not Your Identity.</p>
       </div>
       <div className="p-2 md:pb-16 flex justify-center">
         <Link

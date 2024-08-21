@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LiaTimesSolid } from "react-icons/lia";
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -11,10 +11,8 @@ const Preview = ({ setPublish, description, title }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [tags, setTags] = useState([]);
-
   const { auth } = useAuth();
   const currentUser = auth.user;
-
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +31,9 @@ const Preview = ({ setPublish, description, title }) => {
     const data = new FormData();
     data.append("title", title);
     data.append("content", description);
-    data.append("tags", tags);
+    tags.forEach((tag, index) => {
+      data.append(`tags[${index}]`, tag);
+    });
     data.append("thumbnail", thumbnail);
     data.append("createdBy", currentUser._id);
 
