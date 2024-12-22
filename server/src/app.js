@@ -9,10 +9,10 @@ const app = express();
 //setting up configs and middlewares
 app.use(
   cors({
-    origin: ["http://ec2-13-203-155-46.ap-south-1.compute.amazonaws.com:9000", "http://localhost:5173"],
+    origin: process.env.CLIENT_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
   })
 );
 
