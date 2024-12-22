@@ -2,11 +2,19 @@
 import axios from "axios";
 
 export default axios.create({
-    baseURL:"http://localhost:9000"
+  baseURL: "http://ec2-13-203-155-46.ap-south-1.compute.amazonaws.com:9000/",
+  withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Content-Type": "application/json",
+  },
 });
 
 export const axiosPrivate = axios.create({
-    baseURL:"http://localhost:9000",
-    headers:{"Content-Type":"application/json"},
-    withCredentials: true //tokens will be attacted to each refresh request.
+  baseURL: "http://ec2-13-203-155-46.ap-south-1.compute.amazonaws.com:9000/",
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  },
+  withCredentials: true,
 });
