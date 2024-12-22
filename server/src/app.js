@@ -21,6 +21,10 @@ app.use(express.urlencoded({ extended: true })); //defines what encoder is used 
 app.use(express.static("./public/temp")); //use public folder for static files
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.send("The server is running");
+});
+
 //Routes Import
 import postRouter from "./routes/post.routes.js";
 import userRouter from "./routes/user.routes.js";
