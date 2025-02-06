@@ -1,27 +1,22 @@
-import Dropdown from "../Navbar/dropdown";
-import "boxicons/css/boxicons.min.css";
-
+import { Edit } from "lucide-react";
+import { Link } from "react-router-dom";
+import Dropdown from "./dropdown";
 
 function Navbar() {
   return (
-    <>
-      <div className="bg-black w-full h-fit flex px-[10px] justify-between select-none">
-        <a className="font-logo text-white py-[9px] text-2xl flex" href="/">
-          <img
-            src="../src/assets/hawknodeLogo.png"
-            className="size-6 mr-2 mt-1"
-          />
-          hawknode
-        </a>
-        <div className="text-white text-xl font-Akshar font-bold py-1 flex">
-          <a className="mx-3 flex" href="/compose">
-            <p className="mr-2 py-2">Compose</p>
-            <i className="py-3 bx bx-edit bx-tada"></i>
-          </a>
-          <Dropdown className="z-50" />
-        </div>
+    <div className="bg-black w-full h-fit flex px-4 justify-between items-center select-none">
+      <Link to="/" className="font-logo text-white py-2 text-2xl flex items-center">
+        <img src="../src/assets/hawknodeLogo.png" alt="Hawknode Logo" width={24} height={24} className="mr-2" />
+        hawknode
+      </Link>
+      <div className="text-white text-xl font-Akshar font-bold flex items-center">
+        <Link to="/compose" className="mr-6 flex items-center hover:text-gray-300 transition-colors">
+          <span className=" mr-2">Compose</span>
+          <Edit size={24} />
+        </Link>
+        <Dropdown />
       </div>
-    </>
+    </div>
   );
 }
 

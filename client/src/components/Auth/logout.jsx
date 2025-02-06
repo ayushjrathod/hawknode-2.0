@@ -1,6 +1,6 @@
-import axios from "../../api/axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 
 function Logout() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ function Logout() {
 
   return (
     <>
-      <button onClick={handleClick}>
+      <button className="text-black" onClick={handleClick}>
         Log Out
       </button>
     </>
