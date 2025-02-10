@@ -24,7 +24,7 @@ const Dropdown = () => {
 
   return (
     <div className="relative inline-block text-left z-50" ref={dropdownRef}>
-      <button className="hover:shadow-lg outline-none focus:outline-none" onClick={toggleDropdown}>
+      <button className="" onClick={toggleDropdown}>
         <img
           src={auth.user.avatar || "/placeholder.svg"}
           alt="User avatar"

@@ -13,17 +13,19 @@ import ChangePassword from "./components/Dashboard/changePassword.jsx";
 import EditPost from "./components/Compose/editPost.jsx";
 import DeletePost from "./components/Compose/deletePost.jsx";
 import CombinePostSection from "./components/postSection/combinePostsSection.jsx";
+import { SearchProvider } from "./context/SearchContext";
 
 export default function App() {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/landing" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+    <SearchProvider>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      {/* Private Routes/Protected */}
-      {/* <Route element={<PersistLogin />}> */}
+        {/* Private Routes/Protected */}
+        {/* <Route element={<PersistLogin />}> */}
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Layout />}>
             <Route index element={<CombinePostSection />} />
@@ -50,7 +52,8 @@ export default function App() {
             <Route index element={<ChangePassword />} />
           </Route>
         </Route>
-      {/* </Route> */}
-    </Routes>
+        {/* </Route> */}
+      </Routes>
+    </SearchProvider>
   );
 }
