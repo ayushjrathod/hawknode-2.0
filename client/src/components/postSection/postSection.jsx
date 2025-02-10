@@ -65,7 +65,7 @@ function PostCard() {
         const isSaved = currentUser?.savedPosts?.some((savedPostId) => savedPostId === postData._id) ? true : false;
         return (
           <div
-            className="m-2 w-screen md:w-auto md:m-4 hover:bg-gray-50 transition-colors duration-200 rounded-lg p-3"
+            className="m-2 md:w-auto md:m-4 hover:bg-gray-50 transition-colors duration-200 rounded-lg p-3"
             key={postData._id}
           >
             <div className="flex ml-4 justify-between items-center">
@@ -76,7 +76,7 @@ function PostCard() {
                 />
                 <div className="flex flex-col md:flex-row mx-4 md:items-center">
                   <p className="text-slate-700 font-medium text-sm md:text-base px-0.5">
-                    {postData?.createdBy?.username || "admin"}
+                    {postData?.createdBy?.username || "Unknown User"}
                   </p>
                   <span className="hidden md:block text-slate-400 mx-2">•</span>
                   <p className="text-slate-500 text-xs md:text-sm px-0.5">
@@ -97,10 +97,10 @@ function PostCard() {
               className="flex items-center cursor-pointer select-none hover:opacity-90 transition-opacity duration-200 gap-4"
             >
               <div className="mx-4 flex-grow">
-                <h2 className="font-['Andada_Pro'] text-base md:text-2xl font-bold text-gray-800 mb-2 line-clamp-2">
+                <h2 className="font-['Andada Pro'] text-base md:text-2xl font-semibold text-gray-800 mb-2 line-clamp-2">
                   {postData.title}
                 </h2>
-                <p className="hidden md:block font-['Andada_Pro'] text-sm text-gray-600 line-clamp-3">
+                <p className="hidden md:block font-['Andada Pro'] text-lg text-gray-600 line-clamp-3">
                   {stripHtml(postData.content).substring(0, 180)}...
                 </p>
               </div>

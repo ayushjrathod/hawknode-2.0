@@ -47,17 +47,13 @@ const SavedPostSection = () => {
     <div className=" max-w-3xl mx-auto">
       <div className="space-y-4">
         {displayedSavedPosts.map((postData) => (
-          <div
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-4"
-            key={postData._id}
-          >
-            <div className="flex items-center mb-2">
-              <p className="text-slate-600 text-sm md:text-base font-medium">
-                {postData.createdBy?.username || "Unknown User"}
-              </p>
+          <div className="bg-white" key={postData._id}>
+            <div className="flex items-center mb-2 gap-2">
+              <img className="rounded-full size-6 my-2 border-2 border-gray-100" src={postData?.createdBy?.avatar} />
+              <p className="text-slate-600 text-xs font-medium">{postData.createdBy?.username || "Unknown User"}</p>
             </div>
             <div onClick={() => handleClick(postData._id)} className="cursor-pointer group">
-              <h2 className="font-['Andada_Pro'] text-lg font-semibold group-hover:text-blue-600 transition-colors duration-200">
+              <h2 className="font-['Andada Pro'] text-base font-semibold group-hover:text-gray-600 transition-colors duration-200">
                 {postData.title}
               </h2>
             </div>
@@ -67,10 +63,10 @@ const SavedPostSection = () => {
 
       {savedPosts.length > 3 && (
         <button
-          className="mt-4 px-4 py-2 text-blue-600 hover:text-blue-700 font-medium rounded-md hover:bg-blue-50 transition-colors duration-200"
+          className="mt-4 py-2 text-blue-600 hover:text-blue-700 font-medium text-sm rounded-md "
           onClick={() => setShowAllSavedPosts(!showAllSavedPosts)}
         >
-          {showAllSavedPosts ? "Show Less" : "See More"}
+          {showAllSavedPosts ? "Show Less " : "Show Full List"}
         </button>
       )}
     </div>

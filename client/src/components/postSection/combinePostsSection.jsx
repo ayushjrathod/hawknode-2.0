@@ -4,19 +4,17 @@ import TagsSection from "./tagsSection.jsx";
 
 function CombinePostSection() {
   return (
-    <div className="flex max-w-7xl mx-auto gap-8">
-      <div id="postSection" className="w-[70%] pl-4 flex-col justify-center">
+    <div className="gap-8 flex justify-center mx-8">
+      <div id="postSection" className="pl-4">
         <PostSection />
       </div>
-      <div className="w-[30%] border-l border-gray-200 pl-6">
-        <div className="sticky top-4 space-y-8">
+      <div className="w-[40%] border-l border-gray-200 pl-6">
+        <div className="sticky top-4">
           <div id="savedPostSection">
-            <h2 className="font-Akshar text-xl font-medium mt-4">Saved Posts</h2>
+            <h2 className="font-Akshar text-lg font-medium mt-4">Saved Posts</h2>
             <SavedPostSection />
           </div>
-          <div className="">
-            <TagsSection />
-          </div>
+          <TagsSection />
         </div>
       </div>
     </div>
