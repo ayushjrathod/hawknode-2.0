@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { Edit, Eye, Home, LogOut, Menu, Settings, Share } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import "boxicons/css/boxicons.min.css";
-import  MyPosts  from "./myPosts";
+import MyPosts from "./myPosts";
 import SavedPosts from "./savedPosts";
 
 const Dashboard = () => {
@@ -30,120 +30,92 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-gray-50">
       {/* Sidebar */}
       <div
-        className={`fixed top-15 left-0 bg-black h-full ${
-          isSidebarOpen ? "w-60" : "w-16"
-        } transition-width duration-300`}
+        className={`fixed top-15 left-0 h-full ${
+          isSidebarOpen ? "w-64" : "w-20"
+        } transition-width duration-300 bg-gradient-to-b from-gray-900 to-black shadow-xl`}
       >
         <i
-          className="bx bx-menu text-4xl cursor-pointer px-2 my-4 text-white"
+          className="cursor-pointer px-4 py-4 mx-3 my-4 text-white hover:text-gray-300 transition-colors"
           onClick={handleSidebarToggle}
-        ></i>
-        <ul className="mt-8">
-        <li className="flex items-center p-4 text-white">  
-          <i className="bx bxs-home"></i>
-          {isSidebarOpen && <Link to="/" className="pl-2">Home</Link>}
-        </li>
-          <li className="flex items-center p-4 text-white">
-            <i className="bx bxs-dashboard"></i>
-            {isSidebarOpen && <Link to="" className="ml-4">Dashboard</Link>}
+        >
+          <Menu size={32} />
+        </i>
+        <ul className="mt-8 space-y-2">
+          <li className="hover:bg-gray-800 rounded-lg mx-2">
+            <Link to="/" className="flex items-center p-4 text-gray-300 hover:text-white transition-colors">
+              <Home size={20} />
+              {isSidebarOpen && <span className="pl-3">Home</span>}
+            </Link>
           </li>
-          <li className="flex items-center p-4 text-white">
-            <i className="bx bx-cog"></i>
-            {isSidebarOpen && <Link to="" className="ml-2">Settings</Link>}
+          <li className="hover:bg-gray-800 rounded-lg mx-2">
+            <Link to="" className="flex items-center p-4 text-gray-300 hover:text-white transition-colors">
+              <Menu size={20} />
+              {isSidebarOpen && <span className="pl-3">Dashboard</span>}
+            </Link>
+          </li>
+          <li className="hover:bg-gray-800 rounded-lg mx-2">
+            <Link to="" className="flex items-center p-4 text-gray-300 hover:text-white transition-colors">
+              <Settings size={20} />
+              {isSidebarOpen && <span className="pl-3">Settings</span>}
+            </Link>
           </li>
         </ul>
-        <ul className="mt-auto">
-          <li className="flex items-center p-4 text-red-400">
-            <i className="bx bx-log-out-circle"></i>
-            {isSidebarOpen && <Link to="" className="ml-2"  >Logout</Link>}
+        <div className="absolute bottom-4 w-full">
+          <li className="hover:bg-red-900/30 rounded-lg mx-2 list-none">
+            <Link to="" className="flex items-center p-4 text-red-400 hover:text-red-300 transition-colors">
+              <LogOut size={20} />
+              {isSidebarOpen && <span className="pl-3">Logout</span>}
+            </Link>
           </li>
-        </ul>
+        </div>
       </div>
 
       {/* Main Content */}
-      <div
-        className={`flex-1 ${
-          isSidebarOpen ? "ml-60" : "ml-16"
-        } transition-margin duration-300 bg-gray-300 h-screen`}
-      >
-        {/* Main Content */}
-        <main className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex">
-              <div className="">
-                <img src={auth.user.avatar} className="size-20 rounded-full" />
+      <div className={`flex-1 ${isSidebarOpen ? "ml-64" : "ml-20"} transition-margin duration-300 min-h-screen`}>
+        <main className="p-6 max-w-7xl mx-auto">
+          {/* Profile Section */}
+          <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="flex items-center">
+                <img src={auth.user.avatar} className="w-24 h-24 rounded-full border-4 border-gray-100 shadow-lg" />
+                <div className="ml-6">
+                  <h1 className="text-3xl font-bold text-gray-800">{auth.user.fullname}</h1>
+                  <p className="text-gray-500 text-lg">@{auth.user.username}</p>
+                </div>
               </div>
-              <div className="ml-4 py-3">
-                <h1 className="text-3xl font-bold text-black">
-                  {`${auth.user.fullname}`}
-                </h1>
-                <p className="text-gray-600 ml-1">{`${auth.user.username}`}</p>
-              </div>
-            </div>
-            <div>
-              <div className="flex flex-row">
-                <button className="mx-1 flex items-center px-4 py-2 bg-black text-white rounded-full">
-                  <i className="bx bx-share-alt"></i>
-                  <span className="font-Akshar font-semibold">Share</span>
+              <div className="flex flex-wrap gap-3">
+                <button className="flex items-center px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-colors">
+                  <Share className="mr-2" size={18} />
+                  <span className="font-semibold">Share Profile</span>
                 </button>
-
                 <Link
                   to={`/user/edit/${auth.user.username}`}
-                  className="font-Akshar font-semibold mx-1 flex items-center px-4 py-2 bg-black text-white rounded-full"
+                  className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-colors"
                 >
-                  <i className="bx bx-edit-alt"></i>
-                  Edit User Details
+                  <Edit className="mr-2" size={18} />
+                  <span className="font-semibold">Edit Profile</span>
                 </Link>
               </div>
-              <div className="mt-1">
-              </div>
             </div>
           </div>
 
-          {/* Insights */}
-          <ul className="hidden grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-4">
-            <li className="flex items-center p-4 bg-white   rounded-lg shadow">
-              <i className="bx bx-calendar-check text-4xl bg-blue-100 dark:bg-blue-600 text-blue-600 p-2 rounded-lg"></i>
-              <div className="ml-4">
-                <h3 className="text-xl font-semibold  text-black">1,074</h3>
-                <p className="text-gray-500 dark:text-gray-400">BoxOne</p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 bg-white   rounded-lg shadow">
-              <i className="bx bx-show-alt text-4xl bg-yellow-100 dark:bg-yellow-600 text-yellow-600 p-2 rounded-lg"></i>
-              <div className="ml-4">
-                <h3 className="text-xl font-semibold  text-black">3,944</h3>
-                <p className="text-gray-500 dark:text-gray-400">BoxTwo</p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 bg-white   rounded-lg shadow">
-              <i className="bx bx-line-chart text-4xl bg-green-100 dark:bg-green-600 text-green-600 p-2 rounded-lg"></i>
-              <div className="ml-4">
-                <h3 className="text-xl font-semibold  text-black">14,721</h3>
-                <p className="text-gray-500 dark:text-gray-400">BoxThree</p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 bg-white   rounded-lg shadow">
-              <i className="bx bx-dollar-circle text-4xl bg-red-100 dark:bg-red-600 text-red-600 p-2 rounded-lg"></i>
-              <div className="ml-4">
-                <h3 className="text-xl font-semibold  text-black">$6,742</h3>
-                <p className="text-gray-500 dark:text-gray-400">BoxFour</p>
-              </div>
-            </li>
-          </ul>
-
-          <div className="flex gap-4 mb-4">
-            <div className="flex-1 bg-white   p-4 rounded-lg shadow">
-              <h2 className="text-xl font-bold  text-black mb-4">My Posts</h2>
+          {/* Posts Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-2xl shadow-md">
+              <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <Edit className="mr-2" size={20} />
+                My Posts
+              </h2>
               <MyPosts />
             </div>
-          </div>
-          <div className="flex gap-4 mb-4">
-            <div className="flex-1 bg-white   p-4 rounded-lg shadow">
-              <h2 className="text-xl font-bold  text-black mb-4">Saved Posts</h2>
+            <div className="bg-white p-6 rounded-2xl shadow-md">
+              <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                <Eye className="mr-2" size={20} />
+                Saved Posts
+              </h2>
               <SavedPosts />
             </div>
           </div>

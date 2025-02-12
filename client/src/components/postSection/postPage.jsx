@@ -1,65 +1,68 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/axios.jsx";
 
 function PostPage() {
   const { postID } = useParams();
-
-  const [post, setPost] = useState({});
+  const navigate = useNavigate();
+  const [post, setPost] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`/v1/posts/${postID}`)
-      .then((response) => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`/v1/posts/${postID}`);
         setPost(response.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPost();
   }, [postID]);
 
+  if (!post) return null;
+
   return (
-    <div className="flex-col justify-center items-center mx-[20%]">
-      <div className="flex items-center justify-center">
-        <img
-          className="rounded-lg w-[80%] h-[80%]"
-          src={post.thumbnail}
-          alt="img of post" 
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Thumbnail */}
+      <div className="mb-8 rounded-xl overflow-hidden shadow-lg">
+        <img className="w-full h-96 object-cover" src={post.thumbnail} alt={post.title} loading="lazy" />
+      </div>
+      {/* Title */}
+      <h1 className="text-3xl font-Andada Pro sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-loose">
+        {post.title}
+      </h1>
+      {/* Author Info */}
+      <div className="flex items-center mb-8 space-x-4">
+        <img className="w-12 h-12 rounded-full object-cover" src="../src/assets/avatar.avif" alt="Author avatar" />
+        <div>
+          <p className="font-medium text-gray-900">Blogger Hawk</p>
+          <p className="text-sm text-gray-500">
+            {new Date(post.createdAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+      </div>
+      {/* Content */}
+      <article className="prose lg:prose-xl max-w-3xl mb-8">
+        <div
+          className="text-black font-normal tracking-wide text-lg leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: post.content }}
         />
-      </div>
-      <div>
-        <h2 className=" font-Andada Pro text-5xl font-semibold my-8 text-center">
-          {post.title}
-        </h2>
-      </div>
-
-      <div className="flex mx-4 mb-10 justify-center">
-        <img
-          className="rounded-full size-10 my-2 mx-2"
-          src="../src/assets/avatar.avif"
-        />
-        <span className="mx-3 py-4 hidden font-bold text-slate-500 md:block">
-          ·
-        </span>
-        <p className="py-4 mx-2 text-base font-semibold text-slate-600 ">
-          Blogger Hawk
-        </p>
-        <span className="mx-3 py-4 hidden font-bold text-slate-500 md:block">
-          ·
-        </span>
-        <p className="py-4 mx-2 text-base tooltip-handle text-slate-600">
-          03.06.2030
-        </p>
-      </div>
-
-      <div className="flex items-center">
-        <p
-          className="font-Andada Pro text-2xl"
-          dangerouslySetInnerHTML={{
-            __html: post.content,
-          }}
-        ></p>
-      </div>
+      </article>
+      {/* Tags */}
+      {post.tags?.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-8">
+          {post.tags.map((tag) => (
+            <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
