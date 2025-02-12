@@ -42,6 +42,7 @@ const SavedPostSection = () => {
   if (error) {
     return <div className="p-4 text-center text-red-500">Error: {error}</div>;
   }
+  console.log(savedPosts);
 
   return (
     <div className=" max-w-3xl mx-auto">
@@ -51,6 +52,13 @@ const SavedPostSection = () => {
             <div className="flex items-center mb-2 gap-2">
               <img className="rounded-full size-6 my-2 border-2 border-gray-100" src={postData?.createdBy?.avatar} />
               <p className="text-slate-600 text-xs font-medium">{postData.createdBy?.username || "Unknown User"}</p>
+              <p className="text-slate-500 text-xs md:text-xs px-0.5">
+                {(() => {
+                  const diffTime = Math.abs(new Date() - new Date(postData.createdAt));
+                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  return `${diffDays} ${diffDays === 1 ? "day" : "days"} ago`;
+                })()}
+              </p>
             </div>
             <div onClick={() => handleClick(postData._id)} className="cursor-pointer group">
               <h2 className="font-['Andada Pro'] text-base font-semibold group-hover:text-gray-600 transition-colors duration-200">

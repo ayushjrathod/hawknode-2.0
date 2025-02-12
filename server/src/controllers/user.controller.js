@@ -194,7 +194,7 @@ const getSavedPosts = asyncHandler(async (req, res) => {
   User.findById(userId)
     .populate({
       path: "savedPosts",
-      populate: { path: "createdBy", model: "User", select: "username" },
+      populate: { path: "createdBy", model: "User", select: "username avatar" },
     })
     .then((user) => {
       if (!user) throw new ApiError(404, "User not found");
