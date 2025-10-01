@@ -15,6 +15,7 @@ const Preview = ({ setPublish, description, title }) => {
   const currentUser = auth.user;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleClick = () => {
     imageRef.current.click();
@@ -22,33 +23,45 @@ const Preview = ({ setPublish, description, title }) => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setError("");
 
     if (title === "" || description === "" || tags.length === 0) {
-      console.log("All fields are required!!!");
+      setError("Please fill in all required fields and add at least one tag");
+      setLoading(false);
       return;
     }
 
-    const data = new FormData();
-    data.append("title", title);
-    data.append("content", description);
-    tags.forEach((tag, index) => {
-      data.append(`tags[${index}]`, tag);
-    });
-    data.append("thumbnail", thumbnail);
-    data.append("createdBy", currentUser._id);
+    if (!thumbnail) {
+      setError("Please upload a thumbnail image");
+      setLoading(false);
+      return;
+    }
 
-    axios
-      .post("/v1/posts/create-post", data)
-      .then((response) => {
-        console.log(response);
-        setLoading(false);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", description);
+      formData.append("thumbnail", thumbnail);
+      formData.append("createdBy", currentUser._id);
+
+      // Append tags as JSON string to prevent array parsing issues
+      formData.append("tags", JSON.stringify(tags));
+
+      const response = await axios.post("/v1/posts/create-post", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      console.error("Upload error:", error);
+      setError(error.response?.data?.message || "Failed to create post");
+      setLoading(false);
+    }
   };
+
   return (
     <section className="p-6 absolute inset-0 bg-white z-30">
       <div className="size my-[2rem]">
@@ -79,9 +92,7 @@ const Preview = ({ setPublish, description, title }) => {
               type="file"
               hidden
             />
-            <h1 className="text-xl outline-none w-full border-b border-gray-300 py-2">
-              {title}
-            </h1>
+            <h1 className="text-xl outline-none w-full border-b border-gray-300 py-2">{title}</h1>
             <p
               className="text-base text-gray-500 py-3"
               dangerouslySetInnerHTML={{

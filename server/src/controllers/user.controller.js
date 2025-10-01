@@ -44,14 +44,14 @@ const registerUser = asyncHandler(async (req, res) => {
   if ([fullname, username, email, password].some((field) => field?.trim() === ""))
     throw new ApiError(400, "All fields are required");
 
-  //𝗖𝗵𝗲𝗰𝗸𝗶𝗻𝗴 𝗶𝗳 𝘂𝘀𝗲𝗿 𝗮𝗹𝗿𝗲𝗮𝗱𝘆 𝗲𝘅𝘀𝗶𝘀𝘁𝘀
+  //checking if user already exsists
   const existingUser = await User.findOne({
     $or: [{ username }, { email }], //performs or on the array
   });
 
   if (existingUser) throw new ApiError(409, "User with email or username already exsists");
 
-  //𝗔𝘃𝗮𝘁𝗮𝗿
+  //avatar
   const avatarLocalPath = req.file ? req.file.path : null;
 
   if (!avatarLocalPath) throw new ApiError(400, "Avatar file is required");
@@ -194,7 +194,7 @@ const getSavedPosts = asyncHandler(async (req, res) => {
   User.findById(userId)
     .populate({
       path: "savedPosts",
-      populate: { path: "createdBy", model: "User", select: "username" },
+      populate: { path: "createdBy", model: "User", select: "username avatar" },
     })
     .then((user) => {
       if (!user) throw new ApiError(404, "User not found");

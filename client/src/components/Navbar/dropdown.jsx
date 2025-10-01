@@ -1,115 +1,71 @@
-import { useState, useEffect, useRef } from "react";
+import { BookOpen, Library, User } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { createPopper } from "@popperjs/core";
-import Logout from "../Auth/logout";
 import useAuth from "../../hooks/useAuth";
+import Logout from "../Auth/logout";
 
 const Dropdown = () => {
   const { auth } = useAuth();
-  console.log(auth.user.avatar)
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const btnDropdownRef = useRef(null);
-  const popoverDropdownRef = useRef(null);
-  const popperRef = useRef(null);
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const openDropdownPopover = () => {
-    setDropdownPopoverShow(true);
-    if (popperRef.current) {
-      popperRef.current.setOptions({ placement: "bottom-start" });
-    }
-  };
-
-  const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
-  };
-
-  // Create Popper instance on mount
   useEffect(() => {
-    if (btnDropdownRef.current && popoverDropdownRef.current) {
-      popperRef.current = createPopper(
-        btnDropdownRef.current,
-        popoverDropdownRef.current,
-        {
-          placement: "bottom-start",
-        }
-      );
-    }
-
-    // Add event listener on document for outside clicks
     const handleClickOutside = (event) => {
-      if (
-        dropdownPopoverShow &&
-        !btnDropdownRef.current.contains(event.target) &&
-        !popoverDropdownRef.current.contains(event.target)
-      ) {
-        closeDropdownPopover();
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
       }
     };
 
-    // Add listener on mount, remove on unmount
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [btnDropdownRef, popoverDropdownRef, dropdownPopoverShow]);
+  }, []);
 
-  // bg colors
   return (
-    <>
-      <div className="inline-flex align-middle z-50 mx-3">
-        <button
-          className={"hover:shadow-lg outline-none focus:outline-none"}
-          ref={btnDropdownRef}
-          onClick={() => {
-            dropdownPopoverShow
-              ? closeDropdownPopover()
-              : openDropdownPopover();
-          }}
-        >
-          <img
-            src={auth.user.avatar}
-            className="size-10 rounded-full border-2 p-0.5"
-          />
-        </button>
-        <div
-          ref={popoverDropdownRef}
-          className={
-            (dropdownPopoverShow ? "block " : "hidden ") +
-            "bg-white text-black z-50 float-left py-2 list-none text-left rounded shadow-lg m-4"
-          }
-          style={{ minWidth: "12rem" }}
-        >
-          <Link
-          to={`/user/${auth.user.username}`}
-            className="text-lg py-1 px-4 font-Akshar block w-full whitespace-nowrap bg-transparent tracking-wide font-light mb-1"
-          >
-            Dashboard
-          </Link>
-          <a
-            href="#pablo"
-            className={
-              "text-lg py-2 px-4 font-Akshar block w-full whitespace-no-wrap bg-transparent tracking-wide font-light"
-            }
-            onClick={(e) => e.preventDefault()}
-          >
-            Library
-          </a>
-          <a
-            href="#pablo"
-            className={
-              "text-lg py-2 px-4 font-Akshar block w-full whitespace-no-wrap bg-transparent tracking-wide font-light"
-            }
-            onClick={(e) => e.preventDefault()}
-          >
-            Stories
-          </a>
-          <hr />
-          <div className="font-semibold px-4 tracking-widest">
-            <Logout />
+    <div className="relative inline-block text-left z-50" ref={dropdownRef}>
+      <button className="" onClick={toggleDropdown}>
+        <img
+          src={auth.user.avatar || "/placeholder.svg"}
+          alt="User avatar"
+          className="w-10 h-10 rounded-full border-2 p-0.5"
+        />
+      </button>
+      {isOpen && (
+        <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            <Link
+              to={`/user/${auth.user.username}`}
+              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              role="menuitem"
+            >
+              <User className="mr-3" size={18} />
+              Dashboard
+            </Link>
+            <Link
+              to="/library"
+              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              role="menuitem"
+            >
+              <Library className="mr-3" size={18} />
+              Library
+            </Link>
+            <Link
+              to="/stories"
+              className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              role="menuitem"
+            >
+              <BookOpen className="mr-3" size={18} />
+              Stories
+            </Link>
+            <hr className="my-1" />
+            <div className="px-4 py-2">
+              <Logout />
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

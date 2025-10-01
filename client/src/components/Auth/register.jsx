@@ -24,14 +24,7 @@ function Register() {
   const [errorMsg, setErrorMsg] = useState(null);
   useEffect(() => {
     setErrorMsg("");
-  }, [
-    fullnameRef,
-    usernameRef,
-    emailRef,
-    passwordRef,
-    conpasswordRef,
-    avatarRef,
-  ]);
+  }, [fullnameRef, usernameRef, emailRef, passwordRef, conpasswordRef, avatarRef]);
 
   //success ref
   const [success, setSuccess] = useState(false);
@@ -66,7 +59,7 @@ function Register() {
       .post("/v1/users/register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-           withCredentials: true,
+          //  withCredentials: true,
         },
       })
       .then((response) => {
@@ -93,10 +86,7 @@ function Register() {
         <section className="flex flex-col justify-center">
           <h1 className="text-4xl m-20 font-Akshar font-semibold">Success!</h1>
           <p className="">
-            <Link
-              className="text-2xl font-Akshar font-semibold text-blue-600"
-              to="/login"
-            >
+            <Link className="text-2xl font-Akshar font-semibold text-blue-600" to="/login">
               Go to Login Page
             </Link>
           </p>
@@ -116,14 +106,8 @@ function Register() {
             </h2>
           </div>
           <div className="w-auto h-auto mx-24">
-            <form
-              className="bg-white rounded-md p-6 mx-24 "
-              onSubmit={handleSubmit}
-            >
-              <p
-                ref={errorRef}
-                className={errorMsg ? "errormsg" : "offscreen"}
-              >
+            <form className="bg-white rounded-md p-6 mx-24 " onSubmit={handleSubmit}>
+              <p ref={errorRef} className={errorMsg ? "errormsg" : "offscreen"}>
                 {errorMsg}
               </p>
               <div className="w-80 h-auto p-2 bg-black rounded-md text-white font-Akshar text-2xl flex justify-between">
