@@ -12,7 +12,6 @@ function Navbar() {
         <img src="../src/assets/hawknodeLogo.png" alt="Hawknode Logo" width={24} height={24} className="mr-2" />
         <span className="text-black">hawknode</span>
       </Link>
-      <div>siuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu</div>
       <div className="text-white text-xl font-Akshar font-bold flex items-center">
         <div className="mx-4 my-1">
           <div className="relative w-full max-w-md mx-auto">
@@ -29,7 +28,6 @@ function Navbar() {
         <Link to="/compose" className="mr-6 flex items-center hover:text-gray-300 transition-colors">
           <Edit className="text-black" size={24} />
         </Link>
-        <p>siueueuueueueuueueeeueueuueueueuueueuauth</p>
         <div className="mt-1">
           <Dropdown />
         </div>
