@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true, // corrected from 'requried' to 'required'
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema(
     ],
   },
   { timestamps: true }
-); //timestamps is a mongoose feature automatically adds created at and updated at
+);
 
 //Encrypting password before saving if the value is modified
 userSchema.pre("save", async function (next) {

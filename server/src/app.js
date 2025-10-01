@@ -17,7 +17,7 @@ app.use(
 );
 
 app.use(express.json({ limit: "500000 kb" }));
-app.use(express.urlencoded({ extended: true })); //defines what encoder is used for url e.g what+is+express or what%20express
+app.use(express.urlencoded({ extended: true })); //defines what encoder is used for url e.g what+is+express or what%20express //uses %20 for spaces in URLs since extended:true is set
 app.use(express.static("./public/temp")); //use public folder for static files
 app.use(cookieParser());
 

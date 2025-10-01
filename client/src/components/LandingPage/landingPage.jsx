@@ -9,15 +9,11 @@ function LandingPage() {
   return (
     <div className="w-full h-screen select-none bg-[#ffc017] flex flex-col justify-center">
       <div className="flex items-center justify-center">
-        <h1 className="font-bold font-Asap text-white text-4xl md:text-7xl flex py-[10px] px-2">
-          Stay Hungry
-        </h1>
+        <h1 className="font-bold font-Asap text-white text-4xl md:text-7xl flex py-[10px] px-2">Stay Hungry</h1>
         <div className="hidden px-10 md:flex">
           <img className="" src={brainHero} height="250" width="250" alt="" />
         </div>
-        <h1 className="font-bold font-Asap text-white text-4xl md:text-7xl flex py-[10px] px-2">
-          Stay Foolish
-        </h1>
+        <h1 className="font-bold font-Asap text-white text-4xl md:text-7xl flex py-[10px] px-2">Stay Foolish</h1>
       </div>
       <div className="font-Asap text-white text-2xl font-bold flex justify-center">
         <p>Your Voice, Our Community,</p>
